@@ -3,9 +3,14 @@
   "version": "1.0.0",
   "description": "a backend for youtube from chai aur code backend playlist",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodeon src/index.js"
   },
   "author": "Kirtan Gajjar",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
 }
