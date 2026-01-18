@@ -1,0 +1,11 @@
+{
+  "name": "youtube-express",
+  "version": "1.0.0",
+  "description": "a backend for youtube from chai aur code backend playlist",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kirtan Gajjar",
+  "license": "ISC"
+}
