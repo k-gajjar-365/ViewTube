@@ -6,12 +6,6 @@ import {uploadOnCloudinary} from "../utils/cloudinary.js"
 
 
 const registerUser = asyncHandler(async (req,res) => {
-    // destructre data that comes from user
-    // check if that user exists in the database by thier email or username
-    // return client error : User already exists. please log in
-    // if user does not exists in the database, save data in database
-    // generate token and store in the database
-    // return success message
 
     const {email, username, fullName, password} = await req.body
 
