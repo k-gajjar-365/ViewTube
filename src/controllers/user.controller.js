@@ -179,7 +179,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
       secure: true,
    };
    const { accessToken, newRefreshToken } =
-      await generateAccessAndRefreshToken();
+      await generateAccessAndRefreshToken(user._id);
 
    return res
       .send(200)
