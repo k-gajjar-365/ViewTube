@@ -415,7 +415,7 @@ const getWatchHistory = asyncHandler(async (req, res) => {
    ]);
 
    return res
-      .send(200)
+      .status(200)
       .json(
          new ApiResponse(
             200,
