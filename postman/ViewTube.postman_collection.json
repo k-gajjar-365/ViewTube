@@ -1,0 +1,373 @@
+{
+  "info": {
+    "_postman_id": "8f78e1e9-e085-46da-9da7-9f6334e4d95c",
+    "name": "ViewTube",
+    "description": "# ViewTube\n\nThe ViewTube collection represents a backend API for a video platform (similar to YouTube) built with Express.  \nIt focuses on **user authentication**, **profile management**, and **basic channel data**.\n\n#### Base URL is provided via the `{{domain}}` environment variable, for example:\n\n`{{domain}}/users/...`",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "47329487"
+  },
+  "item": [
+    {
+      "name": "user",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "fullName",
+                  "value": "Kirtan Gajjar",
+                  "type": "text",
+                  "uuid": "fe3912be-683e-464a-bdcc-4be855d15f81"
+                },
+                {
+                  "key": "email",
+                  "value": "kitten@gmail.com",
+                  "type": "text",
+                  "uuid": "db22639f-9aee-4756-ade3-d55bbecdaed3"
+                },
+                {
+                  "key": "password",
+                  "value": "1234",
+                  "type": "text",
+                  "uuid": "eedc5743-53a9-4261-9c99-0bf6d7f82597"
+                },
+                {
+                  "key": "username",
+                  "value": "kitten",
+                  "type": "text",
+                  "uuid": "3caf08ab-ac7a-4a83-91bf-829c94868e6d"
+                },
+                {
+                  "key": "avatar",
+                  "type": "file",
+                  "uuid": "aec44041-22a8-49cb-8308-787a0ed843ae",
+                  "src": "/C:/Users/rajes/Pictures/Screenshots/file1.png"
+                },
+                {
+                  "key": "coverImage",
+                  "type": "file",
+                  "uuid": "1e03898b-a713-4690-a42b-8e1c63c8cc61",
+                  "src": "/C:/Users/rajes/Pictures/Screenshots/file2.png"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{domain}}/users/register",
+              "host": [
+                "{{domain}}"
+              ],
+              "path": [
+                "users",
+                "register"
+              ]
+            },
+            "description": "Registers a new user account in the Express-YouTube API.\n\n- **Method & URL**: `POST {{domain}}/users/register`\n    \n- **Auth**: No authentication required; this is a public sign-up endpoint.\n    \n- **Body type**: `multipart/form-data`\n    \n\n### Request body fields\n\n- `fullName` (string, required): User’s full display name. Example: `Kirtan Gajjar`.\n    \n- `email` (string, required): User’s email address. Must be unique and in valid email format. Example: `kitten@gmail.com`.\n    \n- `password` (string, required): User’s password. The server may enforce minimum length/complexity rules.\n    \n- `username` (string, required): Public username/handle for the account. Must be unique. Example: `kitten`.\n    \n\n### Typical responses\n\n- **201 Created / 200 OK**: User registered successfully. The response usually includes basic user details and/or an auth token depending on server implementation.\n    \n- **400 Bad Request**: Missing or invalid fields (e.g., invalid email format, weak password, missing required fields).\n    \n- **409 Conflict**: Email or username already in use.\n    \n- **500 Internal Server Error**: Unexpected server-side failure while creating the account.\n    \n\nUse this endpoint to create a new user that can later authenticate and interact with the API."
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"jamie@gmail.com\",\r\n    \"password\": \"3210\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{domain}}/users/login",
+              "host": [
+                "{{domain}}"
+              ],
+              "path": [
+                "users",
+                "login"
+              ]
+            },
+            "description": "This endpoint logs in a user using their email and password.\n\n## Request\n- **Method:** `POST`\n- **URL:** `{{domain}}/users/login`\n- **Body (JSON):**\n  - `email` (string, required): The user’s email address.\n  - `password` (string, required): The user’s password.\n\n## Successful Response (Typical)\nOn success, the server returns a 2xx status code (commonly `200 OK`) with a JSON body that typically includes:\n- User information (e.g., id, name, email, etc.).\n- An authentication token (e.g., JWT or session token) that the client can use for subsequent authenticated requests.\n\n## Failure Response (Typical)\nOn failure, the server returns a 4xx status code (such as `400 Bad Request` or `401 Unauthorized`) with a JSON body that typically includes:\n- An error message indicating why the login failed (for example, invalid email/password combination or missing fields).\n\nThe `{{domain}}` variable in the URL should be set in the active environment to point to the correct API base URL (e.g., development, staging, or production)."
+          },
+          "response": []
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OTcwZjg4MmM1ZjNjNmQ3ZGMzY2FjNjQiLCJlbWFpbCI6ImtpdHRlbkBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImtpdHRlbiIsImZ1bGxOYW1lIjoiS2lydGFuIEdhamphciIsImlhdCI6MTc2OTAxMjM0OCwiZXhwIjoxNzY5MDk4NzQ4fQ.HrHPjXrU2h7PkyijdgT0qeuDBc3Meqk7R8K34N8IY6Y",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{domain}}/users/logout",
+              "host": [
+                "{{domain}}"
+              ],
+              "path": [
+                "users",
+                "logout"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OTcwZjg4MmM1ZjNjNmQ3ZGMzY2FjNjQiLCJpYXQiOjE3NjkxMjk3MDAsImV4cCI6MTc2OTk5MzcwMH0.HxZKXEmyxzykNSdh0kihaKbJCQYwbtPlokishuzgy20\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{domain}}/users/refresh-token",
+              "host": [
+                "{{domain}}"
+              ],
+              "path": [
+                "users",
+                "refresh-token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Change Password",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"oldPassword\": \"1234\",\r\n    \"newPassword\": \"3210\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{domain}}/users/change-password",
+              "host": [
+                "{{domain}}"
+              ],
+              "path": [
+                "users",
+                "change-password"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"oldPassword\": \"1234\",\r\n    \"newPassword\": \"3210\"\r\n}"
+            },
+            "url": {
+              "raw": "{{domain}}/users/current-user",
+              "host": [
+                "{{domain}}"
+              ],
+              "path": [
+                "users",
+                "current-user"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update account",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"fullName\": \"Jamie Lannister\",\r\n    \"email\": \"jamie@gmail.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{domain}}/users/update-account",
+              "host": [
+                "{{domain}}"
+              ],
+              "path": [
+                "users",
+                "update-account"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Change avatar image",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "avatar",
+                  "type": "file",
+                  "uuid": "c491675e-327d-4edb-9f6f-01060e183188",
+                  "src": "/C:/Users/rajes/Pictures/Screenshots/file2.png"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{domain}}/users/avatar",
+              "host": [
+                "{{domain}}"
+              ],
+              "path": [
+                "users",
+                "avatar"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Change Cover image",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "coverImage",
+                  "type": "file",
+                  "uuid": "c29e4126-2c06-43fa-86ec-a20d2ff6656d",
+                  "src": "/C:/Users/rajes/Pictures/Screenshots/f.png"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{domain}}/users/cover-image",
+              "host": [
+                "{{domain}}"
+              ],
+              "path": [
+                "users",
+                "cover-image"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get channel details",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "{{domain}}/users/@kitten",
+              "host": [
+                "{{domain}}"
+              ],
+              "path": [
+                "users",
+                "@kitten"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get watch history",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{domain}}/users/history",
+              "host": [
+                "{{domain}}"
+              ],
+              "path": [
+                "users",
+                "history"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Health Check",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{domain}}/health-check",
+              "host": [
+                "{{domain}}"
+              ],
+              "path": [
+                "health-check"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
