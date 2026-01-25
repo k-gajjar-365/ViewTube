@@ -67,16 +67,25 @@ This project is mainly a **revision exercise** to practice backend development f
         ├── constants.js  # Centralized constants 
         ├── index.js       # Entry point, starts the server
         |
+        |
+        ├── postman/
+        |   ├── VidTube.postman.json  # Postman collection file
+        |   ├── VidTube.env.json       # Postman environment file
+        |
+        |
         ├── controllers/  # Business logic for each feature    
         │   ├── user.controller.js   # Handles user model related controllers
         │   ├── healthCheck.controller.js   # Handles user model related controllers
         |
+        |
         ├── db/           # Database connection
         │   └── index.js      # DB connection setup(Mongoose)
+        |
         |
         ├── middlewares/  # Custom middleware
         │   ├── auth.middleware.js      # JWT auth check  
         │   ├── multer.middleware.js    # Multer setup for file uploads
+        |
         |
         ├── models/       # Data model schemas
         │   ├── user.model.js          # User schema 
@@ -87,8 +96,10 @@ This project is mainly a **revision exercise** to practice backend development f
         │   ├── tweet.model.js         # Tweet schema
         │   ├── comment.model.js       # Comment Schema
         |
+        |
         ├── routes/      # Express route definitions
         │   ├── user.routes.js   # Routes for register, login etc.
+        |
         |
         └── utils/         # Helper functions
             ├── ApiResponse.js  # Standardized API response formatting
