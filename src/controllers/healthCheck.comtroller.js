@@ -4,7 +4,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 const heathCheck = asyncHandler(async (req, res) => {
    res
    .status(200)
-   .json(new ApiResponse(200, { success: true}, "Server is Running."));
+   .json(new ApiResponse(200, {}, "Server is Running."));
 });
 
 export { heathCheck };
