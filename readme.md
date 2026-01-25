@@ -75,25 +75,25 @@ This project is mainly a **revision exercise** to practice backend development f
         |
         ├── middlewares/  # Custom middleware
         │   ├── auth.middleware.js      # JWT auth check  
-        │   └── multer.middleware.js    # Multer setup for file uploads
+        │   ├── multer.middleware.js    # Multer setup for file uploads
         |
         ├── models/       # Data model schemas
         │   ├── user.model.js          # User schema 
         │   ├── video.model.js         # Video schema 
         │   ├── playlist.model.js      # Playlist schema
-        │   └── like.model.js          # Like Schema
+        │   ├── like.model.js          # Like Schema
         │   ├── subscription.model.js  # Subscription schema 
         │   ├── tweet.model.js         # Tweet schema
-        │   └── comment.model.js       # Comment Schema
+        │   ├── comment.model.js       # Comment Schema
         |
         ├── routes/      # Express route definitions
         │   ├── user.routes.js   # Routes for register, login etc.
         |
         └── utils/         # Helper functions
-            ├── ApiResponse.js          # Standardized API response formatting
-            ├── ApiError.js          # Standardized API Errors formatting
-            ├── asyncHandler.js         # Utility to wrap async functions and catch errors
-            ├── cloudinary.js           # Cloudinary helper functions for uploads
+            ├── ApiResponse.js  # Standardized API response formatting
+            ├── ApiError.js     # Standardized API Errors formatting
+            ├── asyncHandler.js # Utility to wrap async functions and catch errors
+            ├── cloudinary.js   # Cloudinary helper functions for uploads
 
 
 ---
@@ -114,7 +114,9 @@ This project is mainly a **revision exercise** to practice backend development f
 ### Backend
 1. Clone the repository  
    ```bash
-   // to set link of project
+     git clone https://github.com/k-gajjar-365/VidTube.git
+     cd VidTube
+   ```
 
 
 2. Install dependencies
