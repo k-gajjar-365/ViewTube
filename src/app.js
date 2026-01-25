@@ -19,5 +19,10 @@ import userRouter from "./routes/user.routes.js";
 // routes declaration
 app.use("/api/v1/users", userRouter)
 
+// health check route - GET
+
+import { heathCheck } from "./controllers/healthCheck.comtroller.js";
+app.get("/api/v1/health-check", heathCheck)
+
 // http://localhost:8000/api/v1/users/register
 export default app;
