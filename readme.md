@@ -17,7 +17,7 @@ This project is mainly a **revision exercise** to practice backend development f
 | Module            | Status       | Notes                                      |
 |-------------------|--------------|--------------------------------------------|
 | 🔐 Authentication | ✅ Completed | User registration, login, logout, and JWT secured routes implemented |
-| 🩺 Health Check      | ⏳ Pending    | System status endpoint implemented and working
+| 🩺 Health Check      | ✅ Completed    | System status endpoint implemented and working
 | 📹 Video Uploads  | ⏳ Pending    | Multer + Cloudinary integration in progress |
 | 📦 Playlists      | ⏳ Pending    | Playlist creation and video grouping planned |
 | 👥 User Profiles  | ⏳ Pending    | Profile routes and customization to be added |
@@ -69,6 +69,7 @@ This project is mainly a **revision exercise** to practice backend development f
         |
         ├── controllers/  # Business logic for each feature    
         │   ├── user.controller.js   # Handles user model related controllers
+        │   ├── healthCheck.controller.js   # Handles user model related controllers
         |
         ├── db/           # Database connection
         │   └── index.js      # DB connection setup(Mongoose)
