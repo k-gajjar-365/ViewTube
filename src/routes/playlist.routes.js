@@ -1,0 +1,16 @@
+import { Router } from "express";
+import { createPlaylist, getUserPlaylists } from "../controllers/playlist.controller.js";
+import { verifyJWT } from "../middlewares/auth.middleware.js";
+
+const router = Router();
+
+// all routes below require user to be logged in
+router.use(verifyJWT)
+
+router.route("/create-playlist").post(createPlaylist);
+
+router.route("/all-playlists").get(getUserPlaylists)
+
+
+
+export default router
