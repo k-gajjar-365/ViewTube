@@ -21,7 +21,7 @@ app.use("/api/v1/users", userRouter)
 
 // health check route - GET
 
-import { heathCheck } from "./controllers/healthCheck.comtroller.js";
+import { heathCheck } from "./controllers/healthCheck.controller.js";
 app.get("/api/v1/health-check", heathCheck)
 
 // http://localhost:8000/api/v1/users/register
