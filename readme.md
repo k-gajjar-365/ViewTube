@@ -75,7 +75,7 @@ This project is mainly a **revision exercise** to practice backend development f
         |
         ├── controllers/  # Business logic for each feature    
         │   ├── user.controller.js   # Handles user model related controllers
-        │   ├── healthCheck.controller.js   # Handles user model related controllers
+        │   ├── healthCheck.controller.js   # get request for server health check
         |
         |
         ├── db/           # Database connection
