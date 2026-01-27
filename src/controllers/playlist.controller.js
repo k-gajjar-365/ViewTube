@@ -38,6 +38,59 @@ const createPlaylist = asyncHandler(async (req, res) => {
       );
 });
 
+const updatePlaylist = asyncHandler(async (req, res) => {
+   const { playlistId } = req.params;
+   const { name, description } = req.body;
+
+   if (name === "" || description === "")
+      throw new ApiError(400, "both name and description is required");
+
+   validateMongoId(playlistId);
+
+   const playlist = await Playlist.findById(playlistId);
+
+   if (!playlist) throw new ApiError(400, "Playlist does not exists");
+
+   if (!playlist.owner.equals(req.user._id))
+      throw new ApiError(401, "Not authorized to make changes in the playlist");
+
+   const updatedPlaylist = await Playlist.findByIdAndUpdate(
+      playlistId,
+      {
+         $set: {
+            name,
+            description,
+         },
+      },
+      { new: true }
+   );
+
+   return res
+      .status(200)
+      .json(
+         new ApiResponse(200, updatePlaylist, "Playlist updated successfully")
+      );
+});
+
+const deletePlaylist = asyncHandler(async (req, res) => {
+   const { playlistId } = req.params;
+
+   validateMongoId(playlistId);
+
+   const playlist = await Playlist.findById(playlistId);
+
+   if (!playlist) throw new ApiError(400, "Playlist does not exists");
+
+   if (!playlist.owner.equals(req.user._id))
+      throw new ApiError(401, "Not authorized to make changes in the playlist");
+
+   const deletedPlaylist = await Playlist.findByIdAndDelete(playlistId);
+
+   return res
+      .status(200)
+      .json(new ApiResponse(200, {}, "Playlist Deleted successfully"));
+});
+
 const getUserPlaylists = asyncHandler(async (req, res) => {
    const { userId } = req.params;
 
@@ -82,7 +135,7 @@ const getUserPlaylists = asyncHandler(async (req, res) => {
 const getPlaylistById = asyncHandler(async (req, res) => {
    const { playlistId } = req.params;
 
-   validateMongoId(playlistId)
+   validateMongoId(playlistId);
 
    const playlist = await Playlist.findById(playlistId).select("-owner");
 
@@ -96,8 +149,8 @@ const getPlaylistById = asyncHandler(async (req, res) => {
 const addVideoToPlaylist = asyncHandler(async (req, res) => {
    const { playlistId, videoId } = req.params;
 
-   validateMongoId(playlistId)
-   validateMongoId(videoId)
+   validateMongoId(playlistId);
+   validateMongoId(videoId);
 
    const playlist = await Playlist.findById(playlistId);
 
@@ -107,7 +160,7 @@ const addVideoToPlaylist = asyncHandler(async (req, res) => {
 
    if (!video) throw new ApiError(404, "Video not found.");
 
-   const validUserObjectId = new mongoose.Types.ObjectId(req.user._id);
+   const validUserObjectId = convertToObjectId(req.user._id);
 
    if (playlist.owner !== validUserObjectId)
       throw new ApiError(401, "Not authorized to make changes in the playlist");
@@ -119,9 +172,6 @@ const addVideoToPlaylist = asyncHandler(async (req, res) => {
       },
       { new: true }
    );
-
-   if (!updatedPlaylist)
-      throw new ApiError(500, "Something went wrong while updating playlist");
 
    return res
       .status(201)
@@ -139,4 +189,6 @@ export {
    getUserPlaylists,
    getPlaylistById,
    addVideoToPlaylist,
+   updatePlaylist,
+   deletePlaylist,
 };
