@@ -2,6 +2,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { Playlist } from "../models/playlist.model.js";
+import { Video } from "../models/video.model.js";
 import mongoose from "mongoose";
 
 const createPlaylist = asyncHandler(async (req, res) => {
@@ -86,5 +87,47 @@ const getPlaylistById = asyncHandler(async (req, res) => {
       .json(new ApiResponse(200, playlist, "Playlist Found."));
 });
 
+const addVideoToPlaylist = asyncHandler(async (req, res) => {
+   const { playlistId, videoId } = req.params;
 
-export { createPlaylist, getUserPlaylists, getPlaylistById, addVideoToPlaylist };
+   const playlist = await Playlist.findById(playlistId);
+
+   if (!playlist) throw new ApiError(404, "Playlist not found.");
+
+   const video = await Video.findById(videoId);
+
+   if (!video) throw new ApiError(404, "Video not found.");
+
+   const validUserObjectId = new mongoose.Types.ObjectId(req.user._id);
+
+   if (playlist.owner !== validUserObjectId)
+      throw new ApiError(401, "Not authorized to make changes in the playlist");
+
+   const updatedPlaylist = await Playlist.findByIdAndUpdate(
+      playlist,
+      {
+         $addToSet: { videos: videoId },
+      },
+      { new: true }
+   );
+
+   if (!updatedPlaylist)
+      throw new ApiError(500, "Something went wrong while updating playlist");
+
+   return res
+      .status(201)
+      .json(
+         new ApiResponse(
+            201,
+            updatedPlaylist,
+            "Video added to playlist successfully"
+         )
+      );
+});
+
+export {
+   createPlaylist,
+   getUserPlaylists,
+   getPlaylistById,
+   addVideoToPlaylist,
+};
