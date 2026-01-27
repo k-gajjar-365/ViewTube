@@ -4,10 +4,12 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { Playlist } from "../models/playlist.model.js";
 import { Video } from "../models/video.model.js";
 import mongoose from "mongoose";
+import { validateMongoId } from "../utils/validateMongoId.js";
 
 const createPlaylist = asyncHandler(async (req, res) => {
    const userId = req.user._id;
    const { name, description } = req.body;
+   validateMongoId(userId);
 
    if (name === "" || description === "")
       throw new ApiError(
@@ -38,6 +40,8 @@ const createPlaylist = asyncHandler(async (req, res) => {
 
 const getUserPlaylists = asyncHandler(async (req, res) => {
    const { userId } = req.params;
+
+   validateMongoId(userId);
 
    if (!userId) throw new ApiError(500, "User not found");
 
@@ -78,6 +82,8 @@ const getUserPlaylists = asyncHandler(async (req, res) => {
 const getPlaylistById = asyncHandler(async (req, res) => {
    const { playlistId } = req.params;
 
+   validateMongoId(playlistId)
+
    const playlist = await Playlist.findById(playlistId).select("-owner");
 
    if (!playlist) throw new ApiError(404, "Playlist not found.");
@@ -89,6 +95,9 @@ const getPlaylistById = asyncHandler(async (req, res) => {
 
 const addVideoToPlaylist = asyncHandler(async (req, res) => {
    const { playlistId, videoId } = req.params;
+
+   validateMongoId(playlistId)
+   validateMongoId(videoId)
 
    const playlist = await Playlist.findById(playlistId);
 
