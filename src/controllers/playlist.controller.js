@@ -2,11 +2,14 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { Playlist } from "../models/playlist.model.js";
+import { Video } from "../models/video.model.js";
 import mongoose from "mongoose";
+import { validateMongoId } from "../utils/validateMongoId.js";
 
 const createPlaylist = asyncHandler(async (req, res) => {
    const userId = req.user._id;
    const { name, description } = req.body;
+   validateMongoId(userId);
 
    if (name === "" || description === "")
       throw new ApiError(
@@ -35,8 +38,63 @@ const createPlaylist = asyncHandler(async (req, res) => {
       );
 });
 
+const updatePlaylist = asyncHandler(async (req, res) => {
+   const { playlistId } = req.params;
+   const { name, description } = req.body;
+
+   if (name === "" || description === "")
+      throw new ApiError(400, "both name and description is required");
+
+   validateMongoId(playlistId);
+
+   const playlist = await Playlist.findById(playlistId);
+
+   if (!playlist) throw new ApiError(400, "Playlist does not exists");
+
+   if (!playlist.owner.equals(req.user._id))
+      throw new ApiError(401, "Not authorized to make changes in the playlist");
+
+   const updatedPlaylist = await Playlist.findByIdAndUpdate(
+      playlistId,
+      {
+         $set: {
+            name,
+            description,
+         },
+      },
+      { new: true }
+   );
+
+   return res
+      .status(200)
+      .json(
+         new ApiResponse(200, updatePlaylist, "Playlist updated successfully")
+      );
+});
+
+const deletePlaylist = asyncHandler(async (req, res) => {
+   const { playlistId } = req.params;
+
+   validateMongoId(playlistId);
+
+   const playlist = await Playlist.findById(playlistId);
+
+   if (!playlist) throw new ApiError(400, "Playlist does not exists");
+
+   if (!playlist.owner.equals(req.user._id))
+      throw new ApiError(401, "Not authorized to make changes in the playlist");
+
+   const deletedPlaylist = await Playlist.findByIdAndDelete(playlistId);
+
+   return res
+      .status(200)
+      .json(new ApiResponse(200, {}, "Playlist Deleted successfully"));
+});
+
 const getUserPlaylists = asyncHandler(async (req, res) => {
    const { userId } = req.params;
+
+   validateMongoId(userId);
 
    if (!userId) throw new ApiError(500, "User not found");
 
@@ -77,6 +135,8 @@ const getUserPlaylists = asyncHandler(async (req, res) => {
 const getPlaylistById = asyncHandler(async (req, res) => {
    const { playlistId } = req.params;
 
+   validateMongoId(playlistId);
+
    const playlist = await Playlist.findById(playlistId).select("-owner");
 
    if (!playlist) throw new ApiError(404, "Playlist not found.");
@@ -86,5 +146,49 @@ const getPlaylistById = asyncHandler(async (req, res) => {
       .json(new ApiResponse(200, playlist, "Playlist Found."));
 });
 
+const addVideoToPlaylist = asyncHandler(async (req, res) => {
+   const { playlistId, videoId } = req.params;
 
-export { createPlaylist, getUserPlaylists, getPlaylistById, addVideoToPlaylist };
+   validateMongoId(playlistId);
+   validateMongoId(videoId);
+
+   const playlist = await Playlist.findById(playlistId);
+
+   if (!playlist) throw new ApiError(404, "Playlist not found.");
+
+   const video = await Video.findById(videoId);
+
+   if (!video) throw new ApiError(404, "Video not found.");
+
+   const validUserObjectId = convertToObjectId(req.user._id);
+
+   if (playlist.owner !== validUserObjectId)
+      throw new ApiError(401, "Not authorized to make changes in the playlist");
+
+   const updatedPlaylist = await Playlist.findByIdAndUpdate(
+      playlist,
+      {
+         $addToSet: { videos: videoId },
+      },
+      { new: true }
+   );
+
+   return res
+      .status(201)
+      .json(
+         new ApiResponse(
+            201,
+            updatedPlaylist,
+            "Video added to playlist successfully"
+         )
+      );
+});
+
+export {
+   createPlaylist,
+   getUserPlaylists,
+   getPlaylistById,
+   addVideoToPlaylist,
+   updatePlaylist,
+   deletePlaylist,
+};
