@@ -184,11 +184,46 @@ const addVideoToPlaylist = asyncHandler(async (req, res) => {
       );
 });
 
+const removeVideoFromPlaylist = asyncHandler(async (req, res) => {
+    
+   const { playlistId, videoId } = req.params;
+
+   validateMongoId(playlistId);
+   validateMongoId(videoId);
+
+   const playlist = await Playlist.findById(playlistId);
+
+   if (!playlist) throw new ApiError(404, "Playlist does not exists");
+   const video = await Video.findById(videoId);
+
+   if (!video) throw new ApiError(404, "Video does not exists");
+
+   if (!playlist.owner.equals(req.user._id))
+      throw new ApiError(401, "Not authorized to make changes on the playlist");
+
+   const updatedPlaylist = await Playlist.findByIdAndUpdate(
+      playlist,
+      {
+         $pull: {
+            videos: videoId,
+         },
+      },
+      { new: true }
+   );
+
+   return res
+   .status(200)
+   .json(
+    new ApiResponse(200, {}, "Video removed successfully")
+   )
+});
+
 export {
    createPlaylist,
    getUserPlaylists,
    getPlaylistById,
-   addVideoToPlaylist,
    updatePlaylist,
    deletePlaylist,
+   addVideoToPlaylist,
+   removeVideoFromPlaylist
 };

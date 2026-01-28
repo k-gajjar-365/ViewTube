@@ -19,7 +19,7 @@ This project is mainly a **revision exercise** to practice backend development f
 | 🔐 Authentication | ✅ Completed | User registration, login, logout, and JWT secured routes implemented |
 | 🩺 Health Check      | ✅ Completed    | System status endpoint implemented and working
 | 📹 Video Uploads  | ⏳ Pending    | Multer + Cloudinary integration in progress |
-| 📦 Playlists      | ⏳ Pending    | Playlist creation and video grouping planned |
+| 📦 Playlists      | ✅ Completed    | Playlist creation and video grouping planned |
 | 👥 User Profiles  | ⏳ Pending    | Profile routes and customization to be added |
 | 🎨 Frontend UI    | ⏳ Planned    | React frontend for video playback and user interaction |
 | 📊 Analytics      | ⏳ Planned    | Basic view count and tracking in future phase |
@@ -76,6 +76,7 @@ This project is mainly a **revision exercise** to practice backend development f
         ├── controllers/  # Business logic for each feature    
         │   ├── user.controller.js   # Handles user model related controllers
         │   ├── healthCheck.controller.js   # get request for server health check
+        │   ├── playlist.controller.js   # Handles Playlist related controllers
         |
         |
         ├── db/           # Database connection
@@ -99,6 +100,7 @@ This project is mainly a **revision exercise** to practice backend development f
         |
         ├── routes/      # Express route definitions
         │   ├── user.routes.js   # Routes for register, login etc.
+        │   ├── playlist.routes.js   # Routes for CRUD operation on playlist.
         |
         |
         └── utils/         # Helper functions
@@ -106,6 +108,7 @@ This project is mainly a **revision exercise** to practice backend development f
             ├── ApiError.js     # Standardized API Errors formatting
             ├── asyncHandler.js # Utility to wrap async functions and catch errors
             ├── cloudinary.js   # Cloudinary helper functions for uploads
+            ├── validateMongoId.js   # Utility to validate MongoDB id
 
 
 ---
