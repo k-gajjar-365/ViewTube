@@ -23,7 +23,7 @@ This project is mainly a **revision exercise** to practice backend development f
 | 📹 Video Uploads  | ⏳ Pending    | Multer + Cloudinary integration in progress |
 | 👍 Like  | ⏳ Pending    | Operations related Likes on videos, comments, tweets |
 | 🗨️ Comment  | ⏳ Pending    | CRUD operations on comments and getting all comments on a video |
-| 💲 Subscription  | ⏳ Pending    | Operations related to subscription on a channel |
+| ❤️ Subscription  | ⏳ Pending    | Operations related to subscription on a channel |
 | 👥 User Profiles  | ⏳ Pending    | Profile routes and customization to be added |
 | 🎨 Frontend UI    | ⏳ Planned    | React frontend for video playback and user interaction |
 | 📊 Analytics      | ⏳ Planned    | Basic view count and tracking in future phase |
