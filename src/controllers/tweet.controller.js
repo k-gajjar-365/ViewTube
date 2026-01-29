@@ -11,7 +11,8 @@ const createTweet = asyncHandler(async (req, res) => {
    const { content } = req.body;
    const userId = req.user._id;
 
-   if (isEmptyString(content)) throw new ApiError(400, "Tweet content required");
+   if (isEmptyString(content))
+      throw new ApiError(400, "Tweet content required");
 
    const tweet = await Tweet.create({
       content,
@@ -64,35 +65,60 @@ const getUserTweets = asyncHandler(async (req, res) => {
 });
 
 const updateTweet = asyncHandler(async (req, res) => {
+   const { content } = req.body;
+   const { tweetId } = req.params;
 
-    const { content } = req.body;
-    const { tweetId } = req.params;
+   validateMongoId(tweetId);
 
-    validateMongoId(tweetId);
+   if (isEmptyString(content))
+      throw new ApiError(400, "Tweet content is required");
 
-    if (isEmptyString(content))
-        throw new ApiError(400, "Tweet content is required")
+   const tweet = await Tweet.findById(tweetId);
 
-    const tweet = await Tweet.findById(tweetId);
+   if (!tweet) throw new ApiError(404, "Tweet not found");
 
-    if(!tweet) 
-        throw new ApiError(404, "Tweet not found")
+   if (!tweet.owner.equals(req.user?._id))
+      throw new ApiError(
+         401,
+         "Not authorized to make changes on tweet content"
+      );
 
-    if(!tweet.owner.equals(req.user?._id))
-        throw new ApiError(401, "Not authorized to make changes on tweet content")
+   const updatedTweet = await Tweet.findByIdAndUpdate(
+      tweetId,
+      {
+         content,
+      },
+      { new: true }
+   );
 
-    const updatedTweet = await Tweet.findByIdAndUpdate(tweetId, {
-        content
-    }, {new: true})
+   if (!updateTweet)
+      throw new ApiError(
+         500,
+         "Something went wrong while updating tweet content"
+      );
 
-    if(!updateTweet)
-        throw new ApiError(500, "Something went wrong while updating tweet content")
-
-    return res
-    .status(200)
-    .json(
-        new ApiResponse(200, updatedTweet, "Tweet updated successfully")
-    )
+   return res
+      .status(200)
+      .json(new ApiResponse(200, updatedTweet, "Tweet updated successfully"));
 });
 
-export { createTweet, getUserTweets, updateTweet };
+const deleteTweet = asyncHandler(async (req, res) => {
+   const { tweetId } = req.params;
+
+   validateMongoId(tweetId);
+
+   const tweet = await Tweet.findById(tweetId);
+
+   if (!tweet) throw new ApiError(404, "Tweet not found");
+
+   if (!tweet.owner.equals(req.user?._id))
+      throw new ApiError(401, "Not authorized to modify tweet");
+
+   await Tweet.findByIdAndDelete(tweet);
+
+   return res
+      .status(200)
+      .json(new ApiResponse(200, {}, "Tweet deleted successfully"));
+});
+
+export { createTweet, getUserTweets, updateTweet, deleteTweet };
