@@ -5,6 +5,7 @@ import { User } from "../models/user.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
+import { isEmptyString } from "../utils/isEmptyString.js";
 
 const generateAccessAndRefreshToken = async (userId) => {
    try {
@@ -25,9 +26,9 @@ const generateAccessAndRefreshToken = async (userId) => {
 };
 
 const registerUser = asyncHandler(async (req, res) => {
-   const { email, username, fullName, password } = await req.body;
+   const { email, username, fullName, password } = req.body;
 
-   if (email === "" || username === "" || fullName === "" || password === "") {
+   if (isEmptyString(email) || isEmptyString(username) || isEmptyString(fullName) || isEmptyString(password)) {
       throw new ApiError(400, "All fields are required.");
    }
 
@@ -88,9 +89,9 @@ const registerUser = asyncHandler(async (req, res) => {
 });
 
 const loginUser = asyncHandler(async (req, res) => {
-   const { email, username, password } = await req.body;
+   const { email, username, password } = req.body;
 
-   if (!username && !email) {
+   if (isEmptyString(email) || isEmptyString(password)) {
       throw new ApiError(400, "Username or email is required.");
    }
 
@@ -133,7 +134,7 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 const logoutUser = asyncHandler(async (req, res) => {
-   const userId = await req.user._id;
+   const userId = req.user._id;
    await User.findByIdAndUpdate(
       userId,
       {
@@ -196,9 +197,12 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 });
 
 const changeCurrentPassword = asyncHandler(async (req, res) => {
-   const { oldPassword, newPassword } = await req.body;
+   const { oldPassword, newPassword } = req.body;
 
-   const userId = await req.user._id;
+   if(isEmptyString(oldPassword) || isEmptyString(newPassword))
+      throw new ApiError(400, "All fields are required")
+
+   const userId = req.user._id;
 
    const user = await User.findById(userId);
 
@@ -215,7 +219,7 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
 });
 
 const getCurrentUser = asyncHandler(async (req, res) => {
-   const userId = await req.user?._id;
+   const userId = req.user?._id;
 
    const user = await User.findById(userId).select("-password -refreshToken");
 
@@ -225,13 +229,13 @@ const getCurrentUser = asyncHandler(async (req, res) => {
 });
 
 const updateAccountDetails = asyncHandler(async (req, res) => {
-   const { fullName, email, username } = await req.body;
+   const { fullName, email, username } = req.body;
 
    if (!fullName || !email) {
       throw new ApiError(400, "All fields are required");
    }
 
-   const userId = await req.user?._id;
+   const userId = req.user?._id;
 
    const user = await User.findByIdAndUpdate(
       userId,
@@ -250,7 +254,7 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
 });
 
 const updateUserAvatar = asyncHandler(async (req, res) => {
-   const avatarLocalPath = await req.file?.path;
+   const avatarLocalPath = req.file?.path;
 
    if (!avatarLocalPath) throw new ApiError(400, "Avatar file is missing");
 
@@ -259,7 +263,7 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
    if (!avatar.secure_url)
       throw new ApiError(400, "Error while uploading avatar");
 
-   const userId = await req.user._id;
+   const userId = req.user._id;
 
    const user = await User.findByIdAndUpdate(
       userId,
@@ -277,7 +281,7 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
 });
 
 const updateUserCoverImage = asyncHandler(async (req, res) => {
-   const coverLocalPath = await req.file?.path;
+   const coverLocalPath = req.file?.path;
 
    if (!coverLocalPath) throw new ApiError(400, "Cover image file is missing");
 
@@ -286,7 +290,7 @@ const updateUserCoverImage = asyncHandler(async (req, res) => {
    if (!coverImage.secure_url)
       throw new ApiError(400, "Error while uploading cover image");
 
-   const userId = await req.user._id;
+   const userId = req.user._id;
 
    const user = await User.findByIdAndUpdate(
       userId,
@@ -304,7 +308,7 @@ const updateUserCoverImage = asyncHandler(async (req, res) => {
 });
 
 const getUserChannelProfile = asyncHandler(async (req, res) => {
-   const { username } = await req.params;
+   const { username } = req.params;
 
    if (!username?.trim()) {
       throw new ApiError(400, "Username is missing");

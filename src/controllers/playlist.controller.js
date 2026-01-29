@@ -5,13 +5,14 @@ import { Playlist } from "../models/playlist.model.js";
 import { Video } from "../models/video.model.js";
 import mongoose from "mongoose";
 import { validateMongoId } from "../utils/validateMongoId.js";
+import { isEmptyString } from "../utils/isEmptyString.js";
 
 const createPlaylist = asyncHandler(async (req, res) => {
    const userId = req.user._id;
    const { name, description } = req.body;
    validateMongoId(userId);
 
-   if (name === "" || description === "")
+   if (isEmptyString(name) || isEmptyString(description))
       throw new ApiError(
          400,
          "Both playlist name and playlist description are required"
@@ -42,7 +43,7 @@ const updatePlaylist = asyncHandler(async (req, res) => {
    const { playlistId } = req.params;
    const { name, description } = req.body;
 
-   if (name === "" || description === "")
+   if (isEmptyString(name) || isEmptyString(description))
       throw new ApiError(400, "both name and description is required");
 
    validateMongoId(playlistId);
