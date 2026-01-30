@@ -68,7 +68,7 @@ const deleteVideo = asyncHandler(async (req, res) => {
    if (!video) throw new ApiError(404, "Video not found");
 
    if (!video.owner.equals(req.user._id))
-      throw new ApiError(401, "Not authorized to modify video");
+      throw new ApiError(403, "Not authorized to modify video");
 
    await Video.findByIdAndDelete(videoId);
 
@@ -89,7 +89,7 @@ const updateVideo = asyncHandler(async (req, res) => {
    if (!video) throw new ApiError(404, "Video not found");
 
    if (!video.owner.equals(req.user._id))
-      throw new ApiError(401, "Not authorized to modify video");
+      throw new ApiError(403, "Not authorized to modify video");
 
    let updatedTitle = video.title;
    let updatedDescription = video.description;

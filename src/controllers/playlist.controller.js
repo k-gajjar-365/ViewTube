@@ -53,7 +53,7 @@ const updatePlaylist = asyncHandler(async (req, res) => {
    if (!playlist) throw new ApiError(400, "Playlist does not exists");
 
    if (!playlist.owner.equals(req.user._id))
-      throw new ApiError(401, "Not authorized to make changes in the playlist");
+      throw new ApiError(403, "Not authorized to make changes in the playlist");
 
    const updatedPlaylist = await Playlist.findByIdAndUpdate(
       playlistId,
@@ -83,7 +83,7 @@ const deletePlaylist = asyncHandler(async (req, res) => {
    if (!playlist) throw new ApiError(400, "Playlist does not exists");
 
    if (!playlist.owner.equals(req.user._id))
-      throw new ApiError(401, "Not authorized to make changes in the playlist");
+      throw new ApiError(403, "Not authorized to make changes in the playlist");
 
    const deletedPlaylist = await Playlist.findByIdAndDelete(playlistId);
 
@@ -160,11 +160,9 @@ const addVideoToPlaylist = asyncHandler(async (req, res) => {
    const video = await Video.findById(videoId);
 
    if (!video) throw new ApiError(404, "Video not found.");
-
-   const validUserObjectId = convertToObjectId(req.user._id);
-
-   if (playlist.owner !== validUserObjectId)
-      throw new ApiError(401, "Not authorized to make changes in the playlist");
+   
+   if (!playlist.owner.equals(req.user._id))
+      throw new ApiError(403, "Not authorized to make changes in the playlist");
 
    const updatedPlaylist = await Playlist.findByIdAndUpdate(
       playlist,
@@ -200,7 +198,7 @@ const removeVideoFromPlaylist = asyncHandler(async (req, res) => {
    if (!video) throw new ApiError(404, "Video does not exists");
 
    if (!playlist.owner.equals(req.user._id))
-      throw new ApiError(401, "Not authorized to make changes on the playlist");
+      throw new ApiError(403, "Not authorized to make changes on the playlist");
 
    const updatedPlaylist = await Playlist.findByIdAndUpdate(
       playlist,

@@ -79,7 +79,7 @@ const updateTweet = asyncHandler(async (req, res) => {
 
    if (!tweet.owner.equals(req.user?._id))
       throw new ApiError(
-         401,
+         403,
          "Not authorized to make changes on tweet content"
       );
 
@@ -112,7 +112,7 @@ const deleteTweet = asyncHandler(async (req, res) => {
    if (!tweet) throw new ApiError(404, "Tweet not found");
 
    if (!tweet.owner.equals(req.user?._id))
-      throw new ApiError(401, "Not authorized to modify tweet");
+      throw new ApiError(403, "Not authorized to modify tweet");
 
    await Tweet.findByIdAndDelete(tweet);
 
