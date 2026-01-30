@@ -17,11 +17,13 @@ app.use(cookieParser())
 import userRouter from "./routes/user.routes.js";
 import playlistRouter from "./routes/playlist.routes.js"
 import tweetsRouter from "./routes/tweet.routes.js"
+import videoRouter from "./routes/video.route.js"
 
 // routes declaration
 app.use("/api/v1/users", userRouter)
 app.use("/api/v1/playlist", playlistRouter)
 app.use("/api/v1/tweets",tweetsRouter)
+app.use("/api/v1/videos", videoRouter)
 
 // health check route - GET
 
