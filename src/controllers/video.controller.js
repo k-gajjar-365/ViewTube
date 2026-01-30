@@ -3,10 +3,10 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { isEmptyString } from "../utils/isEmptyString.js";
+import { validateMongoId } from "../utils/validateMongoId.js";
 import { Video } from "../models/video.model.js";
 
 const publishVideo = asyncHandler(async (req, res) => {
-
    const { title, description } = req.body;
 
    if (isEmptyString(title) || isEmptyString(description))
@@ -26,7 +26,7 @@ const publishVideo = asyncHandler(async (req, res) => {
 
    console.log(video);
    console.log(thumbnail);
-   
+
    if (!video || !thumbnail)
       throw new ApiError(500, "Something went wrong while uploading files");
 
@@ -40,10 +40,30 @@ const publishVideo = asyncHandler(async (req, res) => {
    });
 
    return res
-   .status(201)
-   .json(
-    new ApiResponse(201, publishedVideo, "Video uploaded successfully")
-   )
+      .status(201)
+      .json(
+         new ApiResponse(201, publishedVideo, "Video uploaded successfully")
+      );
 });
 
-export { publishVideo };
+const getVideoById = asyncHandler(async (req, res) => {
+
+   const { videoId } = req.params;
+
+   validateMongoId(videoId);
+
+   const video = await Video.findById(videoId);
+
+   if(!video)
+      throw new ApiError(404, "Video not found")
+
+   return res
+   .status(200)
+   .json(
+      new ApiResponse(200, video, "Video Found")
+   )
+
+});
+
+
+export { publishVideo, getVideoById };
