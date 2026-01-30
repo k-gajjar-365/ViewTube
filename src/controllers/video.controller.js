@@ -5,6 +5,7 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { isEmptyString } from "../utils/isEmptyString.js";
 import { validateMongoId } from "../utils/validateMongoId.js";
 import { Video } from "../models/video.model.js";
+import mongoose from "mongoose";
 
 const publishVideo = asyncHandler(async (req, res) => {
    const { title, description } = req.body;
@@ -164,4 +165,91 @@ const togglePublish = asyncHandler(async (req, res) => {
       );
 });
 
-export { publishVideo, getVideoById, deleteVideo, updateVideo, togglePublish };
+const getAllVideos = asyncHandler(async (req, res) => {
+   const { page = 1, limit = 10, query, sortBy, sortType, userId } = req.query;
+
+   const match = {};
+
+   if (query) {
+      match.$or = [
+         { title: { $regex: query, $options: "i" } },
+         { description: { $regex: query, $options: "i" } },
+      ];
+   }
+
+   if (userId) {
+      validateMongoId(userId);
+
+      match.owner = new mongoose.Types.ObjectId(userId);
+   }
+
+   const sort = {};
+
+   if (sortBy) {
+      sort[sortBy] = sortType === "desc" ? -1 : 1;
+   } else {
+      sort.createdAt = -1;
+   }
+
+   const videoAggregate = Video.aggregate([
+      {
+         $match: {
+            $or: [
+               { title: { $regex: query, $options: "i" } },
+               { description: { $regex: query, $options: "i" } },
+            ],
+         },
+      },
+      {
+         $sort: sort,
+      },
+      {
+         $lookup: {
+            from: "users",
+            localField: "owner",
+            foreignField: "_id",
+            as: "ownerDetails",
+            pipeline: [
+               {
+                  $project: {
+                     username: 1,
+                     avatar: 1,
+                  },
+               },
+            ],
+         },
+      },
+      {
+         $addFields: {
+            owner: {
+               $first: "$ownerDetails",
+            },
+         },
+      },
+   ]);
+
+   const options = {
+      page: parseInt(page, 10),
+      limit: parseInt(limit, 10),
+   };
+
+   const videos = await Video.aggregatePaginate(videoAggregate, options);
+
+   if (videos.docs.length === 0)
+      return res
+         .status(200)
+         .json(new ApiResponse(200, videos, "No result found for this query"));
+
+   return res
+      .status(200)
+      .json(new ApiResponse(200, videos, "Video fetched successfully"));
+});
+
+export {
+   publishVideo,
+   getVideoById,
+   deleteVideo,
+   updateVideo,
+   togglePublish,
+   getAllVideos,
+};

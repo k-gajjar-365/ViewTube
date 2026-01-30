@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
    deleteVideo,
+   getAllVideos,
    getVideoById,
    publishVideo,
    togglePublish,
@@ -12,7 +13,7 @@ const router = Router();
 
 router.use(verifyJWT);
 
-router.route("/").post(
+router.route("/").get(getAllVideos).post(
    upload.fields([
       {
          name: "videoFile",
