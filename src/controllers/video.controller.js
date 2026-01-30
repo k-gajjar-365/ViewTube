@@ -47,6 +47,18 @@ const publishVideo = asyncHandler(async (req, res) => {
 });
 
 const getVideoById = asyncHandler(async (req, res) => {
+   const { videoId } = req.params;
+
+   validateMongoId(videoId);
+
+   const video = await Video.findById(videoId);
+
+   if (!video) throw new ApiError(404, "Video not found");
+
+   return res.status(200).json(new ApiResponse(200, video, "Video Found"));
+});
+
+const deleteVideo = asyncHandler(async (req, res) => {
 
    const { videoId } = req.params;
 
@@ -54,16 +66,16 @@ const getVideoById = asyncHandler(async (req, res) => {
 
    const video = await Video.findById(videoId);
 
-   if(!video)
-      throw new ApiError(404, "Video not found")
+   if (!video) throw new ApiError(404, "Video not found");
+
+   if (!video.owner.equals(req.user._id))
+      throw new ApiError(401, "Not authorized to modify video");
+
+   await Video.findByIdAndDelete(videoId);
 
    return res
-   .status(200)
-   .json(
-      new ApiResponse(200, video, "Video Found")
-   )
-
+      .status(200)
+      .json(new ApiResponse(200, "Video deleted successfully"));
 });
 
-
-export { publishVideo, getVideoById };
+export { publishVideo, getVideoById, deleteVideo };
