@@ -130,4 +130,38 @@ const updateVideo = asyncHandler(async (req, res) => {
       .json(new ApiResponse(200, updatedVideo, "Video updated successfully"));
 });
 
-export { publishVideo, getVideoById, deleteVideo, updateVideo };
+const togglePublish = asyncHandler(async (req, res) => {
+   const { videoId } = req.params;
+
+   validateMongoId(videoId);
+
+   const video = await Video.findById(videoId);
+
+   if (!video) throw new ApiError(404, "Video not found");
+
+   if (!video.owner.equals(req.user._id))
+      throw new ApiError(403, "Not authorized to make changes");
+
+   const updatedVideo = await Video.findByIdAndUpdate(
+      videoId,
+      {
+         isPublished: !video.isPublished,
+      },
+      { new: true }
+   );
+
+   if (!updatedVideo)
+      throw new ApiError(500, "Something went wrong while updating video");
+
+   return res
+      .status(200)
+      .json(
+         new ApiResponse(
+            200,
+            updatedVideo,
+            `Video publish status updated : ${updatedVideo.isPublished ? "Published" : "Unpublished"}`
+         )
+      );
+});
+
+export { publishVideo, getVideoById, deleteVideo, updateVideo, togglePublish };
