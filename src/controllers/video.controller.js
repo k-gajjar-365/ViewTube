@@ -59,7 +59,6 @@ const getVideoById = asyncHandler(async (req, res) => {
 });
 
 const deleteVideo = asyncHandler(async (req, res) => {
-
    const { videoId } = req.params;
 
    validateMongoId(videoId);
@@ -78,4 +77,57 @@ const deleteVideo = asyncHandler(async (req, res) => {
       .json(new ApiResponse(200, "Video deleted successfully"));
 });
 
-export { publishVideo, getVideoById, deleteVideo };
+const updateVideo = asyncHandler(async (req, res) => {
+   const { videoId } = req.params;
+   const title = req.body?.title;
+   const description = req.body?.description;
+
+   validateMongoId(videoId);
+
+   const video = await Video.findById(videoId);
+
+   if (!video) throw new ApiError(404, "Video not found");
+
+   if (!video.owner.equals(req.user._id))
+      throw new ApiError(401, "Not authorized to modify video");
+
+   let updatedTitle = video.title;
+   let updatedDescription = video.description;
+
+   if (title) updatedTitle = title;
+
+   if (description) updatedDescription = description;
+
+   const thumbnailLocalPath = req.file?.path; // only single file. i.e. upload.single("thumbnail")
+
+   let updatedThumbnail = video.thumbnail;
+   if (thumbnailLocalPath) {
+      const uploadedThumbnail = await uploadOnCloudinary(thumbnailLocalPath);
+      if (!uploadedThumbnail)
+         throw new ApiError(
+            500,
+            "Something went wrong while updating thumbnail"
+         );
+
+      updatedThumbnail = uploadedThumbnail?.secure_url;
+   }
+
+   const updatedVideo = await Video.findByIdAndUpdate(
+      videoId,
+      {
+         title: updatedTitle,
+         description: updatedDescription,
+         thumbnail: updatedThumbnail,
+      },
+      { new: true }
+   );
+
+   if (!updatedVideo)
+      throw new ApiError(500, "Something went wrong while updating video");
+
+   return res
+      .status(200)
+      .json(new ApiResponse(200, updatedVideo, "Video updated successfully"));
+});
+
+export { publishVideo, getVideoById, deleteVideo, updateVideo };
