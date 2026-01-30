@@ -20,7 +20,7 @@ This project is mainly a **revision exercise** to practice backend development f
 | 🩺 Health Check      | ✅ Completed    | System status endpoint implemented and working
 | 📦 Playlists      | ✅ Completed    | Playlist creation and video grouping planned |
 | 📝 Tweets      | ✅ Completed    | CRUD operations on Tweets |
-| 📹 Video Uploads  | ⏳ Pending    | Multer + Cloudinary integration in progress |
+| 📹 Video Uploads  | ✅ Completed    | Multer + Cloudinary integration in progress |
 | 👍 Like  | ⏳ Pending    | Operations related Likes on videos, comments, tweets |
 | 🗨️ Comment  | ⏳ Pending    | CRUD operations on comments and getting all comments on a video |
 | ❤️ Subscription  | ⏳ Pending    | Operations related to subscription on a channel |
@@ -82,6 +82,7 @@ This project is mainly a **revision exercise** to practice backend development f
         │   ├── healthCheck.controller.js   # get request for server health check
         │   ├── playlist.controller.js   # Handles Playlist related controllers
         │   ├── tweet.controller.js   # Handles Tweet related controllers
+        │   ├── video.controller.js   # Publish, update, delete, query videos
         |
         |
         ├── db/           # Database connection
@@ -105,8 +106,9 @@ This project is mainly a **revision exercise** to practice backend development f
         |
         ├── routes/      # Express route definitions
         │   ├── user.routes.js   # Routes for register, login etc.
-        │   ├── playlist.routes.js   # Routes for CRUD operation on playlist.
+        │   ├── playlist.routes.js   # Routes for CRUD operation on Playlist.
         │   ├── tweet.routes.js   # Routes for CRUD operation on Tweets.
+        │   ├── video.routes.js   # Routes for CRUD operation on Videos.
         |
         |
         └── utils/         # Helper functions
