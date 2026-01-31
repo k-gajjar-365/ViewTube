@@ -97,7 +97,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
    const user = await User.findOne({ $or: [{ username }, { email }] });
 
-   if (!user) throw new ApiError(404, "User does not exists.");
+   if (!user) throw new ApiError(404, "User does not exist.");
 
    const isPasswordCorrect = await user.isPasswordCorrect(password);
 
@@ -367,7 +367,7 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
       },
    ]);
 
-   if (!channel?.length) throw new ApiError(404, "Channel does not exists.");
+   if (!channel?.length) throw new ApiError(404, "Channel does not exist.");
 
    return res
       .status(200)
