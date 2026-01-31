@@ -7,11 +7,6 @@ import { Video } from "../models/video.model.js";
 import { Comment } from "../models/comment.model.js";
 
 const toggleVideoLike = asyncHandler(async (req, res) => {
-   // get video id from params
-   // validate mongo id
-   // find if video exists
-   // check if already liked. if yes, then delete that liked document
-   // return response
 
    const { videoId } = req.params;
 
@@ -71,5 +66,7 @@ const toggleCommentLike = asyncHandler(async (req, res) => {
 
    return res.status(201).json(new ApiResponse(201, like, "Comment Liked"));
 });
+
+
 
 export { toggleVideoLike, toggleCommentLike };
