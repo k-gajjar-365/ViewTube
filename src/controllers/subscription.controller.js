@@ -37,6 +37,23 @@ const getUserChannelSubscribers = asyncHandler(async (req, res) => {
             ],
          },
       },
+      {
+         $unwind: "$subscribers",
+      },
+      {
+         $group: {
+            _id: null,
+            subscribers: {
+               $push: "$subscribers",
+            },
+         },
+      },
+      {
+         $project: {
+            _id: 0,
+            subscribers: 1,
+         },
+      },
    ]);
 
    return res
@@ -77,6 +94,21 @@ const getSubscribedChannels = asyncHandler(async (req, res) => {
             ],
          },
       },
+      {
+         $unwind: "$channels",
+      },
+      {
+         $group: {
+            _id: null,
+            channels: { $push: "$channels" },
+         },
+      },
+      {
+         $project: {
+            _id: 0,
+            channels: 1,
+         },
+      },
    ]);
 
    return res
@@ -99,11 +131,15 @@ const toggleSubscription = asyncHandler(async (req, res) => {
 
    if (!channel) throw new ApiError(404, "Channel not found");
 
+   const cId = new mongoose.Types.ObjectId(channelId);
+
+   if (cId.equals(req.user._id))
+      throw new ApiError(403, "Cannot subscribe yourself");
+
    const findIfAlreadySubscribed = await Subscription.findOne({
       $and: [{ subscriber: req.user?._id }, { channel: channelId }],
    });
 
-   
    if (findIfAlreadySubscribed) {
       await Subscription.findByIdAndDelete(findIfAlreadySubscribed._id);
 
