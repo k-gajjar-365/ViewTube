@@ -4,31 +4,35 @@ import cookieParser from "cookie-parser";
 
 const app = express();
 
-app.use(cors({
-    origin: process.env.CORS_ORIGIN,
-    credentials: true
-}))
-app.use(express.json({limit: "16kb"}))
-app.use(express.urlencoded({extended: true, limit: "16kb"}))
-app.use(express.static("public"))
-app.use(cookieParser())
+app.use(
+   cors({
+      origin: process.env.CORS_ORIGIN,
+      credentials: true,
+   })
+);
+app.use(express.json({ limit: "16kb" }));
+app.use(express.urlencoded({ extended: true, limit: "16kb" }));
+app.use(express.static("public"));
+app.use(cookieParser());
 
-// routes import 
+// routes import
 import userRouter from "./routes/user.routes.js";
-import playlistRouter from "./routes/playlist.routes.js"
-import tweetsRouter from "./routes/tweet.routes.js"
-import videoRouter from "./routes/video.route.js"
+import playlistRouter from "./routes/playlist.routes.js";
+import tweetsRouter from "./routes/tweet.routes.js";
+import videoRouter from "./routes/video.route.js";
+import commentRouter from "./routes/comment.route.js";
 
 // routes declaration
-app.use("/api/v1/users", userRouter)
-app.use("/api/v1/playlist", playlistRouter)
-app.use("/api/v1/tweets",tweetsRouter)
-app.use("/api/v1/videos", videoRouter)
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/playlist", playlistRouter);
+app.use("/api/v1/tweets", tweetsRouter);
+app.use("/api/v1/videos", videoRouter);
+app.use("/api/v1/comments", commentRouter);
 
 // health check route - GET
 
 import { heathCheck } from "./controllers/healthCheck.controller.js";
-app.get("/api/v1/health-check", heathCheck)
+app.get("/api/v1/health-check", heathCheck);
 
 // http://localhost:8000/api/v1/users/register
 export default app;
