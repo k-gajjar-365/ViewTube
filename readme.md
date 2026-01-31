@@ -21,8 +21,8 @@ This project is mainly a **revision exercise** to practice backend development f
 | 📦 Playlists      | ✅ Completed    | Playlist creation and video grouping planned |
 | 📝 Tweets      | ✅ Completed    | CRUD operations on Tweets |
 | 📹 Video Uploads  | ✅ Completed    | Multer + Cloudinary integration in progress |
+| 🗨️ Comment  | ✅ Completed    | CRUD operations on comments and getting all comments on a video |
 | 👍 Like  | ⏳ Pending    | Operations related Likes on videos, comments, tweets |
-| 🗨️ Comment  | ⏳ Pending    | CRUD operations on comments and getting all comments on a video |
 | ❤️ Subscription  | ⏳ Pending    | Operations related to subscription on a channel |
 | 👥 User Profiles  | ⏳ Pending    | Profile routes and customization to be added |
 | 🎨 Frontend UI    | ⏳ Planned    | React frontend for video playback and user interaction |
@@ -83,6 +83,7 @@ This project is mainly a **revision exercise** to practice backend development f
         │   ├── playlist.controller.js   # Handles Playlist related controllers
         │   ├── tweet.controller.js   # Handles Tweet related controllers
         │   ├── video.controller.js   # Publish, update, delete, query videos
+        │   ├── comment.controller.js   # Handles CRUD operations for comments on videos 
         |
         |
         ├── db/           # Database connection
@@ -109,6 +110,7 @@ This project is mainly a **revision exercise** to practice backend development f
         │   ├── playlist.routes.js   # Routes for CRUD operation on Playlist.
         │   ├── tweet.routes.js   # Routes for CRUD operation on Tweets.
         │   ├── video.routes.js   # Routes for CRUD operation on Videos.
+        │   ├── comment.routes.js   # Routes for CRUD operation on Comments.
         |
         |
         └── utils/         # Helper functions
