@@ -32,4 +32,20 @@ const addComment = asyncHandler(async (req, res) => {
       );
 });
 
-export { addComment };
+const deleteComment = asyncHandler(async (req, res) => {
+   const { commentId } = req.params;
+
+   validateMongoId(commentId);
+
+   const comment = await Comment.findById(commentId);
+
+   if (!comment) throw new ApiError(404, "Comment not found");
+
+   await Comment.findByIdAndDelete(commentId);
+
+   return res
+      .status(200)
+      .json(new ApiResponse(200, {}, "Comment deleted successfully"));
+});
+
+export { addComment, deleteComment };
