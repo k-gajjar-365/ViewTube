@@ -5,6 +5,7 @@ import { validateMongoId } from "../utils/validateMongoId.js";
 import { Like } from "../models/like.model.js";
 import { Video } from "../models/video.model.js";
 import { Comment } from "../models/comment.model.js";
+import { Tweet } from "../models/tweet.model.js"
 
 const toggleVideoLike = asyncHandler(async (req, res) => {
 
@@ -67,6 +68,34 @@ const toggleCommentLike = asyncHandler(async (req, res) => {
    return res.status(201).json(new ApiResponse(201, like, "Comment Liked"));
 });
 
+const toggleTweetLike = asyncHandler(async (req,res) => {
+    const {tweetId} = req.params;
+
+    validateMongoId(tweetId)
+
+    const tweet = await Tweet.findById(tweetId)
+
+    if(!tweet) throw new ApiError(404, "Tweet not found")
+
+    const findIfAlreadyLiked = await Like.findOne({
+        $and: [{tweet: tweetId}, {likedBy: req.user._id}]
+    })
+
+    if(findIfAlreadyLiked) {
+        await Like.findByIdAndDelete(findIfAlreadyLiked._id)
+
+        return res.status(200).json(new ApiResponse(200, {}, "Tweet Unliked"))
+    }
+
+    const like = await Like.create({
+        tweet: tweetId,
+        likedBy: req.user._id
+    })
+
+    if(!like) throw new ApiError(500, "Something went wrong while liking a Tweet")
+    
+    return res.status(201).json(new ApiResponse(201, like, "Tweet Liked"))
+})
 
 
-export { toggleVideoLike, toggleCommentLike };
+export { toggleVideoLike, toggleCommentLike, toggleTweetLike };
