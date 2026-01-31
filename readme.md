@@ -22,8 +22,8 @@ This project is mainly a **revision exercise** to practice backend development f
 | 📝 Tweets      | ✅ Completed    | CRUD operations on Tweets |
 | 📹 Video Uploads  | ✅ Completed    | Multer + Cloudinary integration in progress |
 | 🗨️ Comment  | ✅ Completed    | CRUD operations on comments and getting all comments on a video |
+| ❤️ Subscription  | ✅ Completed    | Operations related to subscription on a channel |
 | 👍 Like  | ⏳ Pending    | Operations related Likes on videos, comments, tweets |
-| ❤️ Subscription  | ⏳ Pending    | Operations related to subscription on a channel |
 | 👥 User Profiles  | ⏳ Pending    | Profile routes and customization to be added |
 | 🎨 Frontend UI    | ⏳ Planned    | React frontend for video playback and user interaction |
 | 📊 Analytics      | ⏳ Planned    | Basic view count and tracking in future phase |
@@ -84,6 +84,7 @@ This project is mainly a **revision exercise** to practice backend development f
         │   ├── tweet.controller.js   # Handles Tweet related controllers
         │   ├── video.controller.js   # Publish, update, delete, query videos
         │   ├── comment.controller.js   # Handles CRUD operations for comments on videos 
+        │   ├── subscription.controller.js   # Toggle subscribe, get following/follower accounts 
         |
         |
         ├── db/           # Database connection
@@ -111,6 +112,7 @@ This project is mainly a **revision exercise** to practice backend development f
         │   ├── tweet.routes.js   # Routes for CRUD operation on Tweets.
         │   ├── video.routes.js   # Routes for CRUD operation on Videos.
         │   ├── comment.routes.js   # Routes for CRUD operation on Comments.
+        │   ├── subscription.routes.js   # Routes for Subscription related operations.
         |
         |
         └── utils/         # Helper functions
