@@ -90,4 +90,42 @@ const getSubscribedChannels = asyncHandler(async (req, res) => {
       );
 });
 
-export { getUserChannelSubscribers, getSubscribedChannels };
+const toggleSubscription = asyncHandler(async (req, res) => {
+   const { channelId } = req.params;
+
+   validateMongoId(channelId);
+
+   const channel = await User.findById(channelId);
+
+   if (!channel) throw new ApiError(404, "Channel not found");
+
+   const findIfAlreadySubscribed = await Subscription.findOne({
+      $and: [{ subscriber: req.user?._id }, { channel: channelId }],
+   });
+
+   
+   if (findIfAlreadySubscribed) {
+      await Subscription.findByIdAndDelete(findIfAlreadySubscribed._id);
+
+      return res
+         .status(200)
+         .json(new ApiResponse(200, {}, "Channel Unsubscribed successfully"));
+   }
+
+   const subscribe = await Subscription.create({
+      subscriber: req.user?._id,
+      channel: channelId,
+   });
+
+   if (!subscribe?._id)
+      throw new ApiError(
+         500,
+         "Something went wrong while subscribing a channel"
+      );
+
+   return res
+      .status(200)
+      .json(new ApiResponse(200, subscribe, "Channel Subscribed successfully"));
+});
+
+export { getUserChannelSubscribers, getSubscribedChannels, toggleSubscription };
