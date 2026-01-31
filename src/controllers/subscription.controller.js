@@ -46,4 +46,48 @@ const getUserChannelSubscribers = asyncHandler(async (req, res) => {
       );
 });
 
-export { getUserChannelSubscribers };
+const getSubscribedChannels = asyncHandler(async (req, res) => {
+   const { subscriberId } = req.params;
+
+   validateMongoId(subscriberId);
+
+   const subscriber = await User.findById(subscriberId);
+
+   if (!subscriber) throw new ApiError(404, "User does not exist");
+
+   const subscribedChannels = await Subscription.aggregate([
+      {
+         $match: {
+            subscriber: new mongoose.Types.ObjectId(subscriberId),
+         },
+      },
+      {
+         $lookup: {
+            from: "users",
+            localField: "channel",
+            foreignField: "_id",
+            as: "channels",
+            pipeline: [
+               {
+                  $project: {
+                     username: 1,
+                     avatar: 1,
+                  },
+               },
+            ],
+         },
+      },
+   ]);
+
+   return res
+      .status(200)
+      .json(
+         new ApiResponse(
+            200,
+            subscribedChannels,
+            "Subscribed channels fetched successfully"
+         )
+      );
+});
+
+export { getUserChannelSubscribers, getSubscribedChannels };
