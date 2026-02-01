@@ -13,19 +13,22 @@ const router = Router();
 
 router.use(verifyJWT);
 
-router.route("/").get(getAllVideos).post(
-   upload.fields([
-      {
-         name: "videoFile",
-         maxCount: 1,
-      },
-      {
-         name: "thumbnail",
-         maxCount: 1,
-      },
-   ]),
-   publishVideo
-);
+router
+   .route("/")
+   .get(getAllVideos)
+   .post(
+      upload.fields([
+         {
+            name: "videoFile",
+            maxCount: 1,
+         },
+         {
+            name: "thumbnail",
+            maxCount: 1,
+         },
+      ]),
+      publishVideo
+   );
 
 router
    .route("/:videoId")
@@ -33,6 +36,6 @@ router
    .delete(deleteVideo)
    .patch(upload.single("thumbnail"), updateVideo);
 
-router.route("/:videoId/toggle-publish").patch(togglePublish)
+router.route("/:videoId/toggle-publish").patch(togglePublish);
 
 export default router;

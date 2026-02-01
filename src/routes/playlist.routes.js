@@ -17,13 +17,13 @@ router.use(verifyJWT);
 
 router.route("/").post(createPlaylist);
 router.route("/user/:userId").get(getUserPlaylists);
-router.route("/:playlistId")
-                            .get(getPlaylistById)
-                            .patch(updatePlaylist)
-                            .delete(deletePlaylist);
+router
+   .route("/:playlistId")
+   .get(getPlaylistById)
+   .patch(updatePlaylist)
+   .delete(deletePlaylist);
 
 router.route("/:playlistId/add/:videoId").patch(addVideoToPlaylist);
 router.route("/:playlistId/remove/:videoId").patch(removeVideoFromPlaylist);
-
 
 export default router;

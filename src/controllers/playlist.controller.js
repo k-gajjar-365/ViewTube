@@ -160,7 +160,7 @@ const addVideoToPlaylist = asyncHandler(async (req, res) => {
    const video = await Video.findById(videoId);
 
    if (!video) throw new ApiError(404, "Video not found.");
-   
+
    if (!playlist.owner.equals(req.user._id))
       throw new ApiError(403, "Not authorized to make changes in the playlist");
 
@@ -184,7 +184,6 @@ const addVideoToPlaylist = asyncHandler(async (req, res) => {
 });
 
 const removeVideoFromPlaylist = asyncHandler(async (req, res) => {
-    
    const { playlistId, videoId } = req.params;
 
    validateMongoId(playlistId);
@@ -211,10 +210,10 @@ const removeVideoFromPlaylist = asyncHandler(async (req, res) => {
    );
 
    return res
-   .status(200)
-   .json(
-    new ApiResponse(200, updatedPlaylist, "Video removed successfully")
-   )
+      .status(200)
+      .json(
+         new ApiResponse(200, updatedPlaylist, "Video removed successfully")
+      );
 });
 
 export {
@@ -224,5 +223,5 @@ export {
    updatePlaylist,
    deletePlaylist,
    addVideoToPlaylist,
-   removeVideoFromPlaylist
+   removeVideoFromPlaylist,
 };

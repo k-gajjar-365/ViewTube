@@ -28,7 +28,12 @@ const generateAccessAndRefreshToken = async (userId) => {
 const registerUser = asyncHandler(async (req, res) => {
    const { email, username, fullName, password } = req.body;
 
-   if (isEmptyString(email) || isEmptyString(username) || isEmptyString(fullName) || isEmptyString(password)) {
+   if (
+      isEmptyString(email) ||
+      isEmptyString(username) ||
+      isEmptyString(fullName) ||
+      isEmptyString(password)
+   ) {
       throw new ApiError(400, "All fields are required.");
    }
 
@@ -199,8 +204,8 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 const changeCurrentPassword = asyncHandler(async (req, res) => {
    const { oldPassword, newPassword } = req.body;
 
-   if(isEmptyString(oldPassword) || isEmptyString(newPassword))
-      throw new ApiError(400, "All fields are required")
+   if (isEmptyString(oldPassword) || isEmptyString(newPassword))
+      throw new ApiError(400, "All fields are required");
 
    const userId = req.user._id;
 

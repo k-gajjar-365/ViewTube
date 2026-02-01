@@ -6,4 +6,3 @@ export const validateMongoId = (id) => {
 
    if (!mongoose.isValidObjectId(id)) throw new ApiError(400, "Invalid ID.");
 };
-
