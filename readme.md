@@ -23,7 +23,7 @@ This project is mainly a **revision exercise** to practice backend development f
 | 📹 Video Uploads  | ✅ Completed    | Multer + Cloudinary integration in progress |
 | 🗨️ Comment  | ✅ Completed    | CRUD operations on comments and getting all comments on a video |
 | ❤️ Subscription  | ✅ Completed    | Operations related to subscription on a channel |
-| 👍 Like  | ⏳ Pending    | Operations related Likes on videos, comments, tweets |
+| 👍 Like  | ✅ Completed    | Operations related Likes on videos, comments, tweets |
 | 👥 User Profiles  | ⏳ Pending    | Profile routes and customization to be added |
 | 🎨 Frontend UI    | ⏳ Planned    | React frontend for video playback and user interaction |
 | 📊 Analytics      | ⏳ Planned    | Basic view count and tracking in future phase |
@@ -85,6 +85,7 @@ This project is mainly a **revision exercise** to practice backend development f
         │   ├── video.controller.js   # Publish, update, delete, query videos
         │   ├── comment.controller.js   # Handles CRUD operations for comments on videos 
         │   ├── subscription.controller.js   # Toggle subscribe, get following/follower accounts 
+        │   ├── like.controller.js   # Toggle Like in Video, Comment or Tweet; Get all Liked Videos 
         |
         |
         ├── db/           # Database connection
@@ -113,6 +114,7 @@ This project is mainly a **revision exercise** to practice backend development f
         │   ├── video.routes.js   # Routes for CRUD operation on Videos.
         │   ├── comment.routes.js   # Routes for CRUD operation on Comments.
         │   ├── subscription.routes.js   # Routes for Subscription related operations.
+        │   ├── like.routes.js   # Routes for Likes related operations.
         |
         |
         └── utils/         # Helper functions
