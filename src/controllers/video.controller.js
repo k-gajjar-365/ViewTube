@@ -16,8 +16,8 @@ const publishVideo = asyncHandler(async (req, res) => {
          "Both video title and description fields are required"
       );
 
-   const videoLocalPath = req.files?.videoFile[0]?.path;
-   const thumbnailLocalPath = req.files?.thumbnail[0]?.path;
+   const videoLocalPath = req.files?.videoFile?.[0]?.path;
+   const thumbnailLocalPath = req.files?.thumbnail?.[0]?.path;
 
    if (!videoLocalPath || !thumbnailLocalPath)
       throw new ApiError(400, "Both video and thumbnail files are required");
