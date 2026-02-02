@@ -24,7 +24,7 @@ This project is mainly a **revision exercise** to practice backend development f
 | 🗨️ Comment        | ✅ Completed | CRUD operations on comments and getting all comments on a video      |
 | ❤️ Subscription   | ✅ Completed | Operations related to subscription on a channel                      |
 | 👍 Like           | ✅ Completed | Operations related Likes on videos, comments, tweets                 |
-| 👥 User Profiles  | ⏳ Pending   | Profile routes and customization to be added                         |
+| 👥 Dashboard  | ✅ Completed   | Operations related to fetch user channel stats and videos
 | 🎨 Frontend UI    | ⏳ Planned   | React frontend for video playback and user interaction               |
 | 📊 Analytics      | ⏳ Planned   | Basic view count and tracking in future phase                        |
 
@@ -88,6 +88,7 @@ This project is mainly a **revision exercise** to practice backend development f
         │   ├── comment.controller.js   # Handles CRUD operations for comments on videos
         │   ├── subscription.controller.js   # Toggle subscribe, get following/follower accounts
         │   ├── like.controller.js   # Toggle Like in Video, Comment or Tweet; Get all Liked Videos
+        │   ├── dashboard.controller.js   # Fetch Channel videos and stats ( total views, likes etc.)
         |
         |
         ├── db/           # Database connection
@@ -117,6 +118,7 @@ This project is mainly a **revision exercise** to practice backend development f
         │   ├── comment.routes.js   # Routes for CRUD operation on Comments.
         │   ├── subscription.routes.js   # Routes for Subscription related operations.
         │   ├── like.routes.js   # Routes for Likes related operations.
+        │   ├── dashboard.routes.js   # Routes to fetch channel videos and stats.
         |
         |
         └── utils/         # Helper functions
