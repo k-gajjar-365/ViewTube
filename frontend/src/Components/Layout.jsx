@@ -1,6 +1,5 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-
 const Layout = ({ children }) => {
    return (
       <>
@@ -8,7 +7,7 @@ const Layout = ({ children }) => {
             <a href="/" className="text-xl font-extrabold text-amber-50 ml-5">
                ViewTube
             </a>
-            <div className="flex gap-2 w-[] relative">
+            <div className="flex gap-2 w-[40vh] relative">
                <input
                   class="w-full border bg-transparent py-1 pl-8 pr-3 placeholder-white outline-none sm:py-2"
                   placeholder="Search"
