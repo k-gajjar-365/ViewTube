@@ -1,10 +1,13 @@
 import { useState } from 'react'
-
+import Hero from './Components/Hero'
+import Layout from './Components/Layout'
 function App() {
 
   return (
     <>
-      <h1 className='text-2xl'>TEST</h1>
+      <Layout>
+        <Hero />
+      </Layout>
     </>
   )
 }
