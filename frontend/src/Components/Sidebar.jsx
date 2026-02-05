@@ -6,7 +6,7 @@ const Sidebar = () => {
          <div className="flex group flex-col gap-4 pt-10 w-[10vh] lg:w-[30vh] hover:w-[30vh] h-screen p-5">
             <a
                href="/"
-               className="border text-center hover:bg-[#9164d9] cursor-pointer p-1 rounded-sm flex gap-2"
+               className="border text-center hover:bg-(--primary) cursor-pointer p-1 rounded-sm flex gap-2"
             >
                <svg
                   className="w-6 h-6 text-gray-800 dark:text-white"
@@ -29,7 +29,7 @@ const Sidebar = () => {
             </a>
             <a
                href="/"
-               className="border hover:bg-[#9164d9]  text-center cursor-pointer p-1 rounded-sm flex gap-2"
+               className="border hover:bg-(--primary)  text-center cursor-pointer p-1 rounded-sm flex gap-2"
             >
                <svg
                   className="w-6 h-6 text-gray-800 dark:text-white"
@@ -52,7 +52,7 @@ const Sidebar = () => {
             </a>
             <a
                href="/"
-               className="border hover:bg-[#9164d9] text-center cursor-pointer p-1 rounded-sm flex gap-2"
+               className="border hover:bg-(--primary) text-center cursor-pointer p-1 rounded-sm flex gap-2"
             >
                <svg
                   className="w-6 h-6 text-gray-800 dark:text-white"
@@ -74,7 +74,7 @@ const Sidebar = () => {
             </a>
             <a
                href="/"
-               className="border hover:bg-[#9164d9] text-center cursor-pointer p-1 rounded-sm flex gap-2"
+               className="border hover:bg-(--primary) text-center cursor-pointer p-1 rounded-sm flex gap-2"
             >
                <svg
                   className="w-6 h-6 text-gray-800 dark:text-white"
@@ -97,7 +97,7 @@ const Sidebar = () => {
             </a>
             <a
                href="/"
-               className="border hover:bg-[#9164d9] text-center cursor-pointer p-1 rounded-sm flex gap-2"
+               className="border hover:bg-(--primary) text-center cursor-pointer p-1 rounded-sm flex gap-2"
             >
                <svg
                   className="w-6 h-6 text-gray-800 dark:text-white"
@@ -120,7 +120,7 @@ const Sidebar = () => {
             </a>
             <a
                href="/"
-               className="border hover:bg-[#9164d9] text-center cursor-pointer p-1 rounded-sm flex gap-2"
+               className="border hover:bg-(--primary) text-center cursor-pointer p-1 rounded-sm flex gap-2"
             >
                <svg
                   className="w-6 h-6 text-gray-800 dark:text-white"

@@ -35,7 +35,7 @@ const Navbar = () => {
             </a>
             <a
                href="/"
-               className="hover:bg-[#9164d9] bg-[#ae7aff] px-5 py-1 rounded"
+               className="hover:bg-(--primary) bg-[#ae7aff] px-5 py-1 rounded"
             >
                Sign up
             </a>
