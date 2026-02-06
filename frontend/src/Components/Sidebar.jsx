@@ -325,7 +325,12 @@ const Sidebar = () => {
             </div>
          )}
 
-         <div className="w-[0.4px] h-screen bg-gray-400"></div>
+         <div
+            className="w-px h-screen"
+            style={{
+               boxShadow: "4px 0 5px rgba(0, 0, 0, 0.5)",
+            }}
+         ></div>
       </div>
    );
 };
