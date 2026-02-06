@@ -149,7 +149,7 @@ const Navbar = () => {
                </a>
 
                <a
-                  href="/"
+                  href="/register"
                   className="block text-center py-2 rounded transition-all duration-300 bg-[#ae7aff] hover:bg-[#9f65fd]"
                >
                   Sign up
