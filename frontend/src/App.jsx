@@ -3,6 +3,7 @@ import NoVideo from './Components/NoVideo'
 import Layout from './Components/Layout'
 import { Route, Routes} from "react-router-dom"
 import Register from './Components/Auth/Register'
+import Login from './Components/Auth/Login'
 function App() {
 
   return (
@@ -11,6 +12,7 @@ function App() {
           <Route index element={<NoVideo />}/>
         </Route>
         <Route path='/register' element={<Register />}/>
+        <Route path='/login' element={<Login />}/>
     </Routes>
   )
 }

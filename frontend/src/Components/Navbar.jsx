@@ -77,14 +77,14 @@ const Navbar = () => {
             {/* Desktop Buttons */}
             <div className="hidden md:flex items-center gap-3">
                <a
-                  href="/"
+                  href="/login"
                   className="px-4 py-1 rounded transition-all duration-300 hover:bg-[#2b2b2b]"
                >
                   Login
                </a>
 
                <a
-                  href="/"
+                  href="/register"
                   className="px-4 py-1 rounded transition-all duration-300 bg-[#ae7aff] hover:bg-[#9f65fd]"
                >
                   Sign up
@@ -142,7 +142,7 @@ const Navbar = () => {
          {menuOpen && (
             <div className="md:hidden mt-3 bg-[#1a1a1a] rounded p-4 space-y-3">
                <a
-                  href="/"
+                  href="/login"
                   className="block text-center py-2 rounded transition-all duration-300 hover:bg-[#2b2b2b]"
                >
                   Login
