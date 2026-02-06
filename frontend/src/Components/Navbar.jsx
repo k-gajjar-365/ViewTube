@@ -1,45 +1,137 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 const Navbar = () => {
+   const [menuOpen, setMenuOpen] = useState(false);
+   const [searchOpen, setSearchOpen] = useState(false);
+
+   const inputRef = useRef(null);
+
+   // Auto focus when mobile search opens
+   useEffect(() => {
+      if (searchOpen) {
+         inputRef.current?.focus();
+      }
+   }, [searchOpen]);
+
    return (
-      <header className="flex justify-between mb-3 mt-2 py-2 px-2">
-         <a href="/" className="text-xl font-extrabold text-amber-50 ml-5">
-            ViewTube
-         </a>
-         <div className="flex gap-2 w-[40vh] relative">
-            <input
-               className="w-full border bg-transparent py-1 pl-8 pr-3 placeholder-white outline-none sm:py-2"
-               placeholder="Search"
-            />
-            <span className="absolute left-2.5 top-1/2 inline-block -translate-y-1/2">
-               <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth=""
-                  stroke="currentColor"
-                  aria-hidden="true"
-                  className="h-4 w-4"
+      <header className="w-full bg-[#121212] text-white px-4 py-3">
+         {/* Main Row */}
+         <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
+            {/* Logo */}
+            <a href="/" className="text-xl font-bold">
+               ViewTube
+            </a>
+
+            {/* Desktop Search */}
+            <div className="hidden md:flex relative flex-1 max-w-md">
+               <input
+                  type="search"
+                  placeholder="Search..."
+                  className="w-full bg-transparent border rounded pl-9 pr-3 py-1 outline-none"
+               />
+
+               <span className="absolute left-3 top-1/2 -translate-y-1/2">
+                  <svg
+                     xmlns="http://www.w3.org/2000/svg"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     strokeWidth=""
+                     stroke="currentColor"
+                     aria-hidden="true"
+                     className="h-4 w-4"
+                  >
+                     {" "}
+                     <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                     ></path>{" "}
+                  </svg>
+               </span>
+            </div>
+
+            {/* Desktop Buttons */}
+            <div className="hidden md:flex items-center gap-3">
+               <a
+                  href="/"
+                  className="px-4 py-1 rounded transition-all duration-300 hover:bg-[#2b2b2b]"
                >
-                  <path
-                     strokeLinecap="round"
-                     strokeLinejoin="round"
-                     d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                  ></path>
-               </svg>
-            </span>
+                  Login
+               </a>
+
+               <a
+                  href="/"
+                  className="px-4 py-1 rounded transition-all duration-300 bg-[#ae7aff] hover:bg-[#9f65fd]"
+               >
+                  Sign up
+               </a>
+            </div>
+
+            {/* Mobile Controls */}
+            <div className="flex items-center gap-5 md:hidden">
+               {/* Search Toggle */}
+               <button
+                  onClick={() => setSearchOpen(!searchOpen)}
+                  className="scale-130"
+               >
+                  <svg
+                     xmlns="http://www.w3.org/2000/svg"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     strokeWidth=""
+                     stroke="currentColor"
+                     aria-hidden="true"
+                     className="h-4 w-4"
+                  >
+                     {" "}
+                     <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                     ></path>{" "}
+                  </svg>
+               </button>
+
+               {/* Menu Toggle */}
+               <button
+                  onClick={() => setMenuOpen(!menuOpen)}
+                  className="text-xl"
+               >
+                  ☰
+               </button>
+            </div>
          </div>
-         <div className="flex gap-3">
-            <a href="/" className="hover:bg-[#383737] px-5 py-1 rounded">
-               Login
-            </a>
-            <a
-               href="/"
-               className="hover:bg-(--primary) bg-[#ae7aff] px-5 py-1 rounded"
-            >
-               Sign up
-            </a>
-         </div>
+
+         {/* Mobile Search */}
+         {searchOpen && (
+            <div className="md:hidden mt-3 px-2">
+               <input
+                  ref={inputRef}
+                  type="search"
+                  placeholder="Search..."
+                  className="w-full bg-transparent border rounded px-3 py-2 outline-none"
+               />
+            </div>
+         )}
+
+         {/* Mobile Menu */}
+         {menuOpen && (
+            <div className="md:hidden mt-3 bg-[#1a1a1a] rounded p-4 space-y-3">
+               <a
+                  href="/"
+                  className="block text-center py-2 rounded transition-all duration-300 hover:bg-[#2b2b2b]"
+               >
+                  Login
+               </a>
+
+               <a
+                  href="/"
+                  className="block text-center py-2 rounded transition-all duration-300 bg-[#ae7aff] hover:bg-[#9f65fd]"
+               >
+                  Sign up
+               </a>
+            </div>
+         )}
       </header>
    );
 };
