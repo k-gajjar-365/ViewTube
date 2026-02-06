@@ -1,10 +1,10 @@
 import React from "react";
 
-const Hero = () => {
+const NoVideo = () => {
    return (
-      <div className="flex flex-col items-center justify-center h-screen">
+      <div className="flex text-center flex-col items-center justify-center h-screen">
          <svg
-            class="w-10 h-10 text-gray-800 dark:text-white"
+            className="w-10 h-10 text-gray-800 dark:text-white"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -14,20 +14,20 @@ const Hero = () => {
          >
             <path
                stroke="currentColor"
-               stroke-linecap="round"
-               stroke-linejoin="round"
-               stroke-width="1"
+               strokeLinecap="round"
+               strokeLinejoin="round"
+               strokeWidth="1"
                d="M19 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1Zm0 0-4 4m5 0H4m1 0 4-4m1 4 4-4m-4 7v6l4-3-4-3Z"
             />
          </svg>
 
          <b>No videos available</b>
          <p>
-            There are no videos here available. Please try to search some thing
+            There are no videos here available. Please try to search something
             else.
          </p>
       </div>
    );
 };
 
-export default Hero;
+export default NoVideo;
