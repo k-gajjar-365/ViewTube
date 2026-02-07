@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { toast } from "sonner"
 
 const Login = () => {
    const [user, setUser] = useState({ email: "", password: "" });
@@ -20,9 +21,9 @@ const Login = () => {
       setLoading(true);
 
       try {
-        
-      } catch (error) {
-        
+        toast.success("Login successfull");
+    } catch (error) {
+        toast.error("Login Failed"); 
       }
    };
 
