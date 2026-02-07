@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import errorHandler from "./middlewares/errorHandler.js";
 
 const app = express();
 
@@ -41,4 +42,6 @@ import { heathCheck } from "./controllers/healthCheck.controller.js";
 app.get("/api/v1/health-check", heathCheck);
 
 // http://localhost:8000/api/v1/users/register
+
+app.use(errorHandler);
 export default app;
