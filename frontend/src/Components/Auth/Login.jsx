@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { toast } from "sonner"
+import { toast } from "sonner";
 
 const Login = () => {
    const [user, setUser] = useState({ email: "", password: "" });
    const [buttonDisabled, setButtonDisabled] = useState(true);
    const [loading, setLoading] = useState(false);
-
+   const navigate = useNavigate();
    useEffect(() => {
       if (user.email.length === 0 || user.password.length === 0) {
          setButtonDisabled(true);
@@ -17,13 +17,25 @@ const Login = () => {
    }, [user]);
 
    const handleSubmit = async (e) => {
-      e.preventDefault();
-      setLoading(true);
-
+      const toastId = toast.loading("Logging in...");
       try {
-        toast.success("Login successfull");
-    } catch (error) {
-        toast.error("Login Failed"); 
+         e.preventDefault();
+         setLoading(true);
+         setButtonDisabled(true);
+
+         const response = await axios.post("/api/v1/users/login", user);
+         toast.success(response.data.message, { id: toastId });
+         setLoading(false);
+         setButtonDisabled(false);
+         setTimeout(() => {
+            navigate("/", { replace: true });
+         }, 1000);
+      } catch (error) {
+         toast.error(error.response?.data?.message || "Login Failed", {
+            id: toastId,
+         });
+         setLoading(false);
+         setButtonDisabled(false);
       }
    };
 
