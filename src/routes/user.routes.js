@@ -33,6 +33,10 @@ router.route("/register").post(
 
 router.route("/login").post(loginUser);
 
+// for frontend that just check whether user is logged in or not
+router.route("/check-auth").get(verifyJWT, (_, res) => {
+   return res.status(200).json({ authenticated: true });
+});
 // secured routes
 router.route("/logout").post(verifyJWT, logoutUser);
 router.route("/refresh-token").post(refreshAccessToken);
