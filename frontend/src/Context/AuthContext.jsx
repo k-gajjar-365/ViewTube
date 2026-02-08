@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }) => {
 
    useEffect(() => {
       axios
-         .get("/api/users/check-auth", { withCredentials: true })
+         .get("/api/v1/users/check-auth", { withCredentials: true })
          .then(() => setAuth(true))
          .catch(() => setAuth(false));
    }, []);
