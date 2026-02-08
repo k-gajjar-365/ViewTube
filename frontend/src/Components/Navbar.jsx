@@ -1,4 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useAuth } from "../Context/AuthContext";
+import { toast } from "sonner";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const CloseSvg = () => {
    return (
@@ -25,8 +29,10 @@ const CloseSvg = () => {
 };
 
 const Navbar = () => {
+   const { auth } = useAuth();
    const [menuOpen, setMenuOpen] = useState(false);
    const [searchOpen, setSearchOpen] = useState(false);
+   const navigation = useNavigate();
 
    const inputRef = useRef(null);
 
@@ -37,6 +43,15 @@ const Navbar = () => {
       }
    }, [searchOpen]);
 
+   const handleLogout = async () => {
+      try {
+         const response = await axios.post("/api/v1/users/logout");
+         toast.success(response.data.message);
+         window.location.reload();
+      } catch (error) {
+         toast.error(error.response?.data?.message);
+      }
+   };
    return (
       <header className="w-full bg-[#121212] text-white px-4 py-3">
          {/* Main Row */}
@@ -75,21 +90,32 @@ const Navbar = () => {
             </div>
 
             {/* Desktop Buttons */}
-            <div className="hidden md:flex items-center gap-3">
-               <a
-                  href="/login"
-                  className="px-4 py-1 rounded transition-all duration-300 hover:bg-[#2b2b2b]"
-               >
-                  Login
-               </a>
+            {auth ? (
+               <div className="hidden md:flex items-center gap-3">
+                  <button
+                     onClick={handleLogout}
+                     className="px-4 bg-red-700 cursor-pointer py-1 rounded transition-all duration-300 hover:bg-red-500"
+                  >
+                     Logout
+                  </button>
+               </div>
+            ) : (
+               <div className="hidden md:flex items-center gap-3">
+                  <a
+                     href="/login"
+                     className="px-4 py-1 rounded transition-all duration-300 hover:bg-[#2b2b2b]"
+                  >
+                     Login
+                  </a>
 
-               <a
-                  href="/register"
-                  className="px-4 py-1 rounded transition-all duration-300 bg-[#ae7aff] hover:bg-[#9f65fd]"
-               >
-                  Sign up
-               </a>
-            </div>
+                  <a
+                     href="/register"
+                     className="px-4 py-1 rounded transition-all duration-300 bg-[#ae7aff] hover:bg-[#9f65fd]"
+                  >
+                     Sign up
+                  </a>
+               </div>
+            )}
 
             {/* Mobile Controls */}
             <div className="flex items-center gap-5 md:hidden">
@@ -139,21 +165,33 @@ const Navbar = () => {
          )}
 
          {/* Mobile Menu */}
+
          {menuOpen && (
             <div className="md:hidden mt-3 bg-[#1a1a1a] rounded p-4 space-y-3">
-               <a
-                  href="/login"
-                  className="block text-center py-2 rounded transition-all duration-300 hover:bg-[#2b2b2b]"
-               >
-                  Login
-               </a>
+               {!auth ? (
+                  <>
+                     <a
+                        href="/login"
+                        className="block text-center py-2 rounded transition-all duration-300 hover:bg-[#2b2b2b]"
+                     >
+                        Login
+                     </a>
 
-               <a
-                  href="/register"
-                  className="block text-center py-2 rounded transition-all duration-300 bg-[#ae7aff] hover:bg-[#9f65fd]"
-               >
-                  Sign up
-               </a>
+                     <a
+                        href="/register"
+                        className="block text-center py-2 rounded transition-all duration-300 bg-[#ae7aff] hover:bg-[#9f65fd]"
+                     >
+                        Sign up
+                     </a>
+                  </>
+               ) : (
+                  <button
+                     onClick={handleLogout}
+                     className="block w-full text-center py-2 rounded-lg transition-all duration-300 bg-red-600 hover:bg-red-400"
+                  >
+                     Logout
+                  </button>
+               )}
             </div>
          )}
       </header>

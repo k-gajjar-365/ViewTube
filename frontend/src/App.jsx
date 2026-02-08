@@ -15,9 +15,8 @@ function App() {
          </Route>
 
          <Route element={<Layout />}>
-            <Route element={<AuthGaurd />}>
-               <Route path="/" element={<NoVideo />} />
-            </Route>
+            <Route path="/" element={<NoVideo />} />
+            <Route element={<AuthGaurd />}></Route>
          </Route>
       </Routes>
    );
