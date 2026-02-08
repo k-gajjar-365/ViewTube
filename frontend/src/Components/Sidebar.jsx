@@ -4,7 +4,7 @@ const CloseSvg = () => {
    return (
       <div className="absolute top-1 scale-115">
          <svg
-            class="w-6 h-6 text-gray-800 dark:text-white"
+            className="w-6 h-6 text-gray-800 dark:text-white"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -14,9 +14,9 @@ const CloseSvg = () => {
          >
             <path
                stroke="currentColor"
-               stroke-linecap="round"
-               stroke-linejoin="round"
-               stroke-width="2"
+               strokeLinecap="round"
+               strokeLinejoin="round"
+               strokeWidth="2"
                d="m15 9-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
             />
          </svg>
