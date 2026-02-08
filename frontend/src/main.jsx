@@ -4,12 +4,15 @@ import { BrowserRouter } from 'react-router-dom'
 import './index.css'
 import App from './App.jsx'
 import { Toaster } from "sonner"
+import { AuthProvider } from './Context/AuthContext.jsx'
 
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
+    <AuthProvider>
     <App />
+    </AuthProvider>
     <Toaster
   theme="dark"
   richColors={false}
