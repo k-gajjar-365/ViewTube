@@ -1,21 +1,27 @@
 import React, { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 import axios from "axios";
 
 const VideoList = () => {
    const [videos, setVideos] = useState([]);
+   const [searchParams] = useSearchParams();
+
+   const query = searchParams.get("q") || "";
 
    useEffect(() => {
       (async () => {
          try {
-            const response = await axios.get("/api/v1/videos?query=react");
+            const response = await axios.get(`/api/v1/videos?query=${query}`);
 
             setVideos(response.data.data.docs);
+            console.log(response.data.data.docs);
+            
          } catch (error) {
             toast.error(error?.response?.data?.message || "Error");
          }
       })();
-   }, []);
+   }, [query]);
 
    return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">

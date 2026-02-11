@@ -33,9 +33,15 @@ const Navbar = () => {
    const [menuOpen, setMenuOpen] = useState(false);
    const [searchOpen, setSearchOpen] = useState(false);
    const navigation = useNavigate();
-
+   const [serachValue, setSerachValue] = useState("");
    const inputRef = useRef(null);
 
+   const handleKeyDown = (e) => {
+      if (e.key === "Enter") {
+         if (!serachValue.trim()) return;
+         console.log(serachValue);
+      }
+   };
    // Auto focus when mobile search opens
    useEffect(() => {
       if (searchOpen) {
@@ -66,6 +72,9 @@ const Navbar = () => {
                <input
                   type="search"
                   placeholder="Search..."
+                  value={serachValue}
+                  onChange={(e) => setSerachValue(e.target.value)}
+                  onKeyDown={handleKeyDown}
                   className="w-full bg-transparent border rounded pl-9 pr-3 py-1 outline-none"
                />
 
@@ -158,6 +167,9 @@ const Navbar = () => {
                <input
                   ref={inputRef}
                   type="search"
+                  value={serachValue}
+                  onChange={(e) => setSerachValue(e.target.value)}
+                  onKeyDown={handleKeyDown}
                   placeholder="Search..."
                   className="w-full bg-transparent border rounded px-3 py-2 outline-none"
                />
