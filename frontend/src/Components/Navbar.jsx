@@ -39,7 +39,9 @@ const Navbar = () => {
    const handleKeyDown = (e) => {
       if (e.key === "Enter") {
          if (!serachValue.trim()) return;
-         console.log(serachValue);
+         setTimeout(() => {
+            navigation(`/?q=${encodeURIComponent(serachValue)}`);
+         }, 200);
       }
    };
    // Auto focus when mobile search opens

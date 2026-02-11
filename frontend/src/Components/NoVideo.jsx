@@ -1,6 +1,6 @@
 import React from "react";
 
-const NoVideo = () => {
+const NoVideo = (props) => {
    return (
       <div className="flex text-center flex-col items-center justify-center h-screen">
          <svg
@@ -21,7 +21,7 @@ const NoVideo = () => {
             />
          </svg>
 
-         <b>No videos available</b>
+         <b>No videos available for "{props.search}"</b>
          <p>
             There are no videos here available. Please try to search something
             else.
