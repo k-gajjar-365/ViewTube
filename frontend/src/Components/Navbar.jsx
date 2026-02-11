@@ -40,6 +40,7 @@ const Navbar = () => {
       if (e.key === "Enter") {
          if (!serachValue.trim()) return;
          setTimeout(() => {
+            document.title = `${serachValue} - ViewTube`
             navigation(`/?q=${encodeURIComponent(serachValue)}`);
          }, 200);
       }
