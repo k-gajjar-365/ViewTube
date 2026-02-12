@@ -6,6 +6,7 @@ import Register from './Pages/Register'
 import Login from './Pages/Login'
 import AuthGaurd from './Auth/AuthGaurd'
 import VideoList from './Pages/VideoList'
+import Video from "./Pages/Video";
 
 function App() {
    return (
@@ -18,6 +19,7 @@ function App() {
          <Route element={<Layout />}>
             <Route element={<AuthGaurd />}>
                <Route path="/" element={<VideoList />} />
+               <Route path="/videos/:videoId" element={<Video />}/>
             </Route>
          </Route>
       </Routes>

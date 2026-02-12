@@ -63,7 +63,7 @@ const VideoList = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
          {videos.map((video) => (
             <a
-               href={video.videoFile}
+               href={`/videos/${video._id}`}
                key={video._id}
                className="m-1 p-1 rounded-lg"
                onMouseEnter={() => handlePreview(video._id)}
