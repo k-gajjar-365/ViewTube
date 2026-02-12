@@ -65,7 +65,7 @@ const Navbar = () => {
       }
    };
    return (
-      <header className="w-full bg-[#121212] text-white px-4 py-3">
+      <header className="w-full sticky bg-[#121212] top-0 z-40 text-white px-4 py-3">
          {/* Main Row */}
          <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
             {/* Logo */}
@@ -169,7 +169,7 @@ const Navbar = () => {
 
          {/* Mobile Search */}
          {searchOpen && (
-            <div className="md:hidden fixed inset-0 z-40 ml-2 h-0 w-120 top-12 mt-3 px-2">
+            <div className="md:hidden fixed inset-0 z-40 bg-black/60 pt-20 px-4">
                <input
                   ref={inputRef}
                   type="search"

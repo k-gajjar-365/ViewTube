@@ -27,7 +27,7 @@ const Sidebar = () => {
    const [openMenu, setopenMenu] = useState(false);
 
    return (
-      <div className="flex fixed  lg:static z-40 bg-[#121212]">
+      <div className="flex fixed sm:static z-40 lg:z-20 sm:z-10 bg-[#121212]">
          <div className="group hidden sm:flex flex-col gap-4 pt-10 w-[10vh] lg:w-[30vh] hover:w-[30vh] h-screen p-5">
             <a
                href="/"
@@ -192,7 +192,7 @@ const Sidebar = () => {
                onClick={() => setopenMenu}
             >
                <div
-                  className="group flex flex-col gap-4 pt-10 w-[30vh] h-screen p-5 bg-[#121212]"
+                  className="group flex  flex-col gap-4 pt-10 w-[30vh] h-screen p-5 bg-[#121212]"
                   onClick={(e) => e.stopPropagation()}
                >
                   <a

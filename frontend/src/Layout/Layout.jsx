@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Navbar from '../Components/Navbar'
-import Sidebar from '../Components/Sidebar'
+import Navbar from "../Components/Navbar";
+import Sidebar from "../Components/Sidebar";
 
 const Layout = () => {
    return (
@@ -15,7 +15,7 @@ const Layout = () => {
             <Sidebar />
 
             {/* Main Content */}
-            <main className="flex-1 p-4 overflow-y-auto">
+            <main className="flex-1 p-4">
                <Outlet />
             </main>
          </div>
