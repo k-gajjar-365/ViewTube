@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 import axios from "axios";
 import NoVideo from "./NoVideo";
-import Loader from "./Loader";
+import Loader from '../Components/Loader'
 
 const VideoList = () => {
    const [videos, setVideos] = useState([]);

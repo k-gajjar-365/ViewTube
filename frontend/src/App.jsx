@@ -1,11 +1,11 @@
 import { useState } from "react";
-import NoVideo from "./Components/NoVideo";
-import Layout from "./Components/Layout";
+import Layout from './Layout/Layout'
 import { Route, Routes } from "react-router-dom";
-import Register from "./Components/Auth/Register";
-import Login from "./Components/Auth/Login";
-import AuthGaurd from "./Components/Auth/AuthGaurd";
-import VideoList from "./Components/VideoList";
+
+import Register from './Pages/Register'
+import Login from './Pages/Login'
+import AuthGaurd from './Auth/AuthGaurd'
+import VideoList from './Pages/VideoList'
 
 function App() {
    return (

@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "../../Context/AuthContext";
+import { useAuth } from "../Context/AuthContext";
 
 const AuthGaurd = ({ redirectIfAuth = false }) => {
    const {auth} = useAuth();
