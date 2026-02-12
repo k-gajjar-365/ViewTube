@@ -43,6 +43,9 @@ const Navbar = () => {
             document.title = `${serachValue} - ViewTube`
             navigation(`/?q=${encodeURIComponent(serachValue)}`);
          }, 200);
+         setTimeout(() => {
+            setSearchOpen(false)
+         }, 400);
       }
    };
    // Auto focus when mobile search opens
@@ -166,7 +169,7 @@ const Navbar = () => {
 
          {/* Mobile Search */}
          {searchOpen && (
-            <div className="md:hidden mt-3 px-2">
+            <div className="md:hidden fixed inset-0 z-40 ml-2 h-0 w-120 top-12 mt-3 px-2">
                <input
                   ref={inputRef}
                   type="search"
@@ -174,7 +177,7 @@ const Navbar = () => {
                   onChange={(e) => setSerachValue(e.target.value)}
                   onKeyDown={handleKeyDown}
                   placeholder="Search..."
-                  className="w-full bg-transparent border rounded px-3 py-2 outline-none"
+                  className="w-full border bg-[#151515] rounded px-3 py-2 outline-none"
                />
             </div>
          )}
@@ -182,7 +185,7 @@ const Navbar = () => {
          {/* Mobile Menu */}
 
          {menuOpen && (
-            <div className="md:hidden mt-3 bg-[#1a1a1a] rounded p-4 space-y-3">
+            <div className="md:hidden fixed inset-0 z-50 top-10 h-0 mt-3 bg-[#121212] rounded p-4 space-y-3">
                {!auth ? (
                   <>
                      <a
