@@ -1,2 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-<svg width="800px" height="800px" viewBox="0 0 48 48" id="b" xmlns="http://www.w3.org/2000/svg"><defs><style>.c{fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;}</style></defs><path class="c" d="m29.6573,10.1573c7.6576,0,13.8427,6.185,13.8427,13.8427s-6.185,13.8427-13.8427,13.8427c-4.9087,0-19.7332-8.2467-24.6419-10.9956-.6872-.3927-.6872-1.3744,0-1.7671l5.8905-3.0434-2.1598-1.3744c-.6872-.3927-.589-1.3744.0982-1.669,4.3197-2.3562,16.8861-8.8357,20.8131-8.8357Z"/><polygon class="c" points="36.1369 24 26.4176 18.404 26.4176 29.596 36.1369 24"/></svg>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
+<svg fill="#000000" width="256px" height="256px" viewBox="0 0 24.00 24.00" id="youtube" data-name="Flat Line" xmlns="http://www.w3.org/2000/svg" class="icon flat-line" transform="matrix(1, 0, 0, -1, 0, 0)rotate(0)" stroke="#000000">
+<g id="SVGRepo_bgCarrier" stroke-width="0"/>
+<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.43200000000000005"/>
+<g id="SVGRepo_iconCarrier">
+<path id="secondary" d="M18.24,5.21C16.76,5.1,14.68,5,12,5s-4.76.1-6.24.21A3,3,0,0,0,3,8.2v7.6a3,3,0,0,0,2.76,3C7.24,18.9,9.32,19,12,19s4.76-.1,6.24-.21a3,3,0,0,0,2.76-3V8.2A3,3,0,0,0,18.24,5.21ZM10,15V9l5,3Z" style="fill: #3dc2b9; stroke-width:0.00024000000000000003;"/>
+<path id="primary" d="M15,12l-5,3V9Zm6-3.8a3,3,0,0,0-2.76-3C16.75,5.1,14.68,5,12,5s-4.75.1-6.24.21A3,3,0,0,0,3,8.2v7.6a3,3,0,0,0,2.76,3C7.25,18.9,9.32,19,12,19s4.75-.1,6.24-.21a3,3,0,0,0,2.76-3Z" style="fill: none; stroke: #000000; stroke-linecap: round; stroke-linejoin: round; stroke-width:0.00024000000000000003;"/>
+</g>
+</svg>
