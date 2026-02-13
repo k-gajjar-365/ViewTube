@@ -5,16 +5,24 @@ import axios from "axios";
 import NoVideo from "./NoVideo";
 import Loader from '../Components/Loader'
 
-const VideoList = () => {
+const VideoList = ({gridCols}) => {
    const [videos, setVideos] = useState([]);
    const [searchParams] = useSearchParams();
    const [hoverOnVideo, setHoverOnVideo] = useState(null);
    const [loading, setLoading] = useState(false);
    const timerRef = useRef(null);
 
-   const query = searchParams.get("q") || "";
+   const query = searchParams.get("q")    || "";
    const sortBy = searchParams.get("sortBy") || "";
    const sortType = searchParams.get("sortType") || "";
+
+   const gridMap = {
+   1: "lg:grid-cols-1",
+   2: "lg:grid-cols-2",
+   3: "lg:grid-cols-3",
+   4: "lg:grid-cols-4",
+};
+
 
    function calculateDuration(duration) {
       const totalSeconds = Math.floor(duration);
@@ -60,7 +68,7 @@ const VideoList = () => {
    if (videos.length === 0) return <NoVideo search={query} />;
 
    return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div className={`grid grid-cols-1 md:grid-cols-1 ${gridMap[gridCols] || "lg:grid-cols-3"}`}>
          {videos.map((video) => (
             <a
                href={`/videos/${video._id}`}
