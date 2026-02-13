@@ -52,11 +52,32 @@ const getVideoById = asyncHandler(async (req, res) => {
 
    validateMongoId(videoId);
 
-   const video = await Video.findById(videoId);
+   const video = await Video.aggregate([
+      {
+         $match: {
+            _id: new mongoose.Types.ObjectId(videoId),
+         },
+      },
+      {
+         $lookup: {
+            from: "users",
+            localField: "owner",
+            foreignField: "_id",
+            as: "owner",
+         },
+      },
+      {
+         $addFields: {
+            owner: {
+               $first: "$owner",
+            },
+         },
+      },
+   ]);   
 
    if (!video) throw new ApiError(404, "Video not found");
 
-   return res.status(200).json(new ApiResponse(200, video, "Video Found"));
+   return res.status(200).json(new ApiResponse(200, video[0], "Video Found"));
 });
 
 const deleteVideo = asyncHandler(async (req, res) => {
