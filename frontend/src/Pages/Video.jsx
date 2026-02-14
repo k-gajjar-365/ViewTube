@@ -6,30 +6,51 @@ import second from "../assets/icons/logo.svg";
 import CollapsibleText from "../Components/CollapsibleText";
 import VideoList from "./VideoList";
 import Comments from "../Components/Comments";
-import logo from "../assets/icons/logo.svg"
+import logo from "../assets/icons/logo.svg";
+import Loader from "../Components/Loader";
 
 const Video = () => {
    const params = useParams();
    const { videoId } = params;
 
    const [video, setVideo] = useState(null);
+   const [channel, setChannel] = useState(null);
    const [like, setLike] = useState(false);
    const [comment, setComment] = useState("");
    const [disLike, setDisLike] = useState(false);
    const [showComments, setShowComments] = useState(false);
-   
-   //    useEffect(() => {
-   //     (async () => {
-   //         try {
-   //             const response = await axios.get(`/api/v1/videos/${videoId}`, {withCredentials: true})
 
-   //             setVideo(response.data.data)
+   useEffect(() => {
+      (async () => {
+         try {
+            const response = await axios.get(`/api/v1/videos/${videoId}`, {
+               withCredentials: true,
+            });
+            setVideo(response.data.data);
+         } catch (error) {
+            toast.error(
+               error.response.data.message ||
+                  "Error while fetching video details"
+            );
+         }
+      })();
+   }, []);
 
-   //         } catch (error) {
-   //             toast.error(error.response.data.message || "Error while fetching video details")
-   //         }
-   //     })()
-   //    }, []);
+   useEffect(() => {
+      (async () => {
+         try {
+            const response = await axios.get(
+               `/api/v1/users/@${video.owner.username}`,
+               { withCredentials: true }
+            );
+
+            setChannel(response.data.data);
+            
+         } catch (error) {
+            console.log(error);
+         }
+      })();
+   }, [video]);
 
    const handleLike = () => {
       setDisLike(false);
@@ -41,20 +62,19 @@ const Video = () => {
       setDisLike(!disLike);
    };
 
+   if (!video) return <Loader />;
+   if(!channel) return <Loader />;
+
    return (
       <div className="lg:grid grid-cols-3">
          <div className="flex flex-col gap-4 col-span-2">
             <div className="rounded-sm ">
-               <video
-                  src="https://www.pexels.com/download/video/35361237/"
-                  controls
-                  className="rounded"
-               />
+               <video src={video.videoFile} controls className="rounded" />
             </div>
             <div className="flex rounded-lg bg-[#131313] shadow-black shadow-sm flex-col  p-5 gap-4 mt-2">
                <div className="flex flex-col">
-                  <b>Advanced React Patterns</b>
-                  <span>30,164 views ·18 hours ago</span>
+                  <b>{video.title}</b>
+                  <span>{video.views} views ·18 hours ago</span>
                </div>
                <div className="flex justify-between">
                   <div className="flex">
@@ -65,7 +85,7 @@ const Video = () => {
                         >
                            <span>
                               <svg
-                                 class="w-6 h-6 text-gray-800 dark:text-black"
+                                 className="w-6 h-6 text-gray-800 dark:text-black"
                                  aria-hidden="true"
                                  xmlns="http://www.w3.org/2000/svg"
                                  width="24"
@@ -117,7 +137,7 @@ const Video = () => {
                         >
                            <span>
                               <svg
-                                 class="w-6 h-6 text-gray-800 dark:text-black"
+                                 className="w-6 h-6 text-gray-800 dark:text-black"
                                  aria-hidden="true"
                                  xmlns="http://www.w3.org/2000/svg"
                                  width="24"
@@ -141,7 +161,7 @@ const Video = () => {
                         >
                            <span>
                               <svg
-                                 class="w-6 h-6 text-gray-800 dark:text-white"
+                                 className="w-6 h-6 text-gray-800 dark:text-white"
                                  aria-hidden="true"
                                  xmlns="http://www.w3.org/2000/svg"
                                  width="24"
@@ -164,8 +184,8 @@ const Video = () => {
                   </div>
 
                   <div>
-                     <button class="peer cursor-pointer flex items-center gap-x-2 rounded-lg bg-white px-4 py-1.5 text-black">
-                        <span class="inline-block w-5">
+                     <button className="peer cursor-pointer flex items-center gap-x-2 rounded-lg bg-white px-4 py-1.5 text-black">
+                        <span className="inline-block w-5">
                            <svg
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"
@@ -190,34 +210,32 @@ const Video = () => {
                   <div className="flex gap-2">
                      <div className="flex mt-2 items-center justify-center w-12 h-12 mx-1 rounded-full overflow-hidden">
                         <img
-                           src={second}
-                           alt=""
+                           src={channel?.avatar}
+                           alt="Avatar image"
                            className="inline-block size-10 rounded-full ring-2 ring-gray-900 outline -outline-offset-1 outline-white/10"
                         />
                      </div>
 
                      <div className="flex mt-2 flex-col">
                         <span className="font-bold text-md">
-                           React Patterns
+                           {channel.username}
                         </span>
                         <span className="text-gray-500 text-sm">
-                           757K Subscribers
+                           {channel.subscribersCount} Subscribers
                         </span>
                      </div>
                   </div>
 
                   <div>
-                     <button className="px-4 py-2 cursor-pointer bg-(--primary) hover:bg-(--primary-on-hover) rounded-lg mt-2">
-                        Subscribe
+                     <button className={`px-4 py-2 cursor-pointer ${channel.isSubscribed ? "bg-gray-600" : "bg-(--primary)"} hover:bg-(--primary-on-hover) rounded-lg mt-2`}>
+                        {channel.isSubscribed ? "Subscribed" : "Subscribe"}
                      </button>
                   </div>
                </div>
-               <div class="w-full mt-3 h-[0.5px] bg-gray-500 mx-auto"></div>
+               <div className="w-full mt-3 h-[0.5px] bg-gray-500 mx-auto"></div>
                <div>
                   <CollapsibleText
-                     text={
-                        "🚀 Dive into the world of React with our latest tutorial series: 'Advanced React Patterns'! 🛠️ Whether you're a seasoned developer or just starting out, this series is designed to elevate your React skills to the next level."
-                     }
+                     text={video.description}
                   />
                </div>
             </div>
