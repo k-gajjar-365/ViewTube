@@ -1,0 +1,981 @@
+{
+   "info": {
+      "_postman_id": "8f78e1e9-e085-46da-9da7-9f6334e4d95c",
+      "name": "ViewTube",
+      "description": "# ViewTube\n\nThe ViewTube collection represents a backend API for a video platform (similar to YouTube) built with Express.  \nIt focuses on **user authentication**, **profile management**, and **basic channel data**.\n\n#### Base URL is provided via the `{{domain}}` environment variable, for example:\n\n`{{domain}}/users/...`",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+      "_exporter_id": "47329487"
+   },
+   "item": [
+      {
+         "name": "User",
+         "item": [
+            {
+               "name": "Register",
+               "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                     "mode": "formdata",
+                     "formdata": [
+                        {
+                           "key": "fullName",
+                           "value": "Tyrion Lannnister",
+                           "type": "text",
+                           "uuid": "fe3912be-683e-464a-bdcc-4be855d15f81"
+                        },
+                        {
+                           "key": "email",
+                           "value": "ty@gmail.com",
+                           "type": "text",
+                           "uuid": "db22639f-9aee-4756-ade3-d55bbecdaed3"
+                        },
+                        {
+                           "key": "password",
+                           "value": "1234",
+                           "type": "text",
+                           "uuid": "eedc5743-53a9-4261-9c99-0bf6d7f82597"
+                        },
+                        {
+                           "key": "username",
+                           "value": "tyrion",
+                           "type": "text",
+                           "uuid": "3caf08ab-ac7a-4a83-91bf-829c94868e6d"
+                        },
+                        {
+                           "key": "avatar",
+                           "type": "file",
+                           "uuid": "aec44041-22a8-49cb-8308-787a0ed843ae",
+                           "src": [
+                              "/C:/Users/rajes/Pictures/Screenshots/f3.png",
+                              "/C:/Users/rajes/Pictures/Screenshots/f.png"
+                           ]
+                        },
+                        {
+                           "key": "coverImage",
+                           "type": "file",
+                           "uuid": "1e03898b-a713-4690-a42b-8e1c63c8cc61",
+                           "src": [
+                              "/C:/Users/rajes/Pictures/Screenshots/file2.png",
+                              "/C:/Users/rajes/Pictures/Screenshots/file1.png"
+                           ]
+                        }
+                     ]
+                  },
+                  "url": {
+                     "raw": "{{domain}}/users/register",
+                     "host": ["{{domain}}"],
+                     "path": ["users", "register"]
+                  },
+                  "description": "Registers a new user account in the Express-YouTube API.\n\n- **Method & URL**: `POST {{domain}}/users/register`\n    \n- **Auth**: No authentication required; this is a public sign-up endpoint.\n    \n- **Body type**: `multipart/form-data`\n    \n\n### Request body fields\n\n- `fullName` (string, required): User’s full display name. Example: `Kirtan Gajjar`.\n    \n- `email` (string, required): User’s email address. Must be unique and in valid email format. Example: `kitten@gmail.com`.\n    \n- `password` (string, required): User’s password. The server may enforce minimum length/complexity rules.\n    \n- `username` (string, required): Public username/handle for the account. Must be unique. Example: `kitten`.\n    \n\n### Typical responses\n\n- **201 Created / 200 OK**: User registered successfully. The response usually includes basic user details and/or an auth token depending on server implementation.\n    \n- **400 Bad Request**: Missing or invalid fields (e.g., invalid email format, weak password, missing required fields).\n    \n- **409 Conflict**: Email or username already in use.\n    \n- **500 Internal Server Error**: Unexpected server-side failure while creating the account.\n    \n\nUse this endpoint to create a new user that can later authenticate and interact with the API."
+               },
+               "response": []
+            },
+            {
+               "name": "Login",
+               "request": {
+                  "auth": {
+                     "type": "noauth"
+                  },
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                     "mode": "raw",
+                     "raw": "{\r\n    \"email\": \"kitten@gmail.com\",\r\n    \"password\": \"1234\"\r\n}",
+                     "options": {
+                        "raw": {
+                           "language": "json"
+                        }
+                     }
+                  },
+                  "url": {
+                     "raw": "{{domain}}/users/login",
+                     "host": ["{{domain}}"],
+                     "path": ["users", "login"]
+                  },
+                  "description": "This endpoint logs in a user using their email and password.\n\n## Request\n- **Method:** `POST`\n- **URL:** `{{domain}}/users/login`\n- **Body (JSON):**\n  - `email` (string, required): The user’s email address.\n  - `password` (string, required): The user’s password.\n\n## Successful Response (Typical)\nOn success, the server returns a 2xx status code (commonly `200 OK`) with a JSON body that typically includes:\n- User information (e.g., id, name, email, etc.).\n- An authentication token (e.g., JWT or session token) that the client can use for subsequent authenticated requests.\n\n## Failure Response (Typical)\nOn failure, the server returns a 4xx status code (such as `400 Bad Request` or `401 Unauthorized`) with a JSON body that typically includes:\n- An error message indicating why the login failed (for example, invalid email/password combination or missing fields).\n\nThe `{{domain}}` variable in the URL should be set in the active environment to point to the correct API base URL (e.g., development, staging, or production)."
+               },
+               "response": []
+            },
+            {
+               "name": "Logout",
+               "request": {
+                  "auth": {
+                     "type": "bearer",
+                     "bearer": [
+                        {
+                           "key": "token",
+                           "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OTcwZjg4MmM1ZjNjNmQ3ZGMzY2FjNjQiLCJlbWFpbCI6ImtpdHRlbkBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImtpdHRlbiIsImZ1bGxOYW1lIjoiS2lydGFuIEdhamphciIsImlhdCI6MTc2OTAxMjM0OCwiZXhwIjoxNzY5MDk4NzQ4fQ.HrHPjXrU2h7PkyijdgT0qeuDBc3Meqk7R8K34N8IY6Y",
+                           "type": "string"
+                        }
+                     ]
+                  },
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                     "mode": "raw",
+                     "raw": "",
+                     "options": {
+                        "raw": {
+                           "language": "json"
+                        }
+                     }
+                  },
+                  "url": {
+                     "raw": "{{domain}}/users/logout",
+                     "host": ["{{domain}}"],
+                     "path": ["users", "logout"]
+                  }
+               },
+               "response": []
+            },
+            {
+               "name": "Refresh Token",
+               "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                     "mode": "raw",
+                     "raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OTcwZjg4MmM1ZjNjNmQ3ZGMzY2FjNjQiLCJpYXQiOjE3NjkxMjk3MDAsImV4cCI6MTc2OTk5MzcwMH0.HxZKXEmyxzykNSdh0kihaKbJCQYwbtPlokishuzgy20\"\r\n}",
+                     "options": {
+                        "raw": {
+                           "language": "json"
+                        }
+                     }
+                  },
+                  "url": {
+                     "raw": "{{domain}}/users/refresh-token",
+                     "host": ["{{domain}}"],
+                     "path": ["users", "refresh-token"]
+                  }
+               },
+               "response": []
+            },
+            {
+               "name": "Change Password",
+               "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                     "mode": "raw",
+                     "raw": "{\r\n    \"oldPassword\": \"1234\",\r\n    \"newPassword\": \"3210\"\r\n}",
+                     "options": {
+                        "raw": {
+                           "language": "json"
+                        }
+                     }
+                  },
+                  "url": {
+                     "raw": "{{domain}}/users/change-password",
+                     "host": ["{{domain}}"],
+                     "path": ["users", "change-password"]
+                  }
+               },
+               "response": []
+            },
+            {
+               "name": "Get Current User",
+               "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                     "mode": "raw",
+                     "raw": "{\r\n    \"oldPassword\": \"1234\",\r\n    \"newPassword\": \"3210\"\r\n}"
+                  },
+                  "url": {
+                     "raw": "{{domain}}/users/current-user",
+                     "host": ["{{domain}}"],
+                     "path": ["users", "current-user"]
+                  }
+               },
+               "response": []
+            },
+            {
+               "name": "Update account",
+               "request": {
+                  "method": "PATCH",
+                  "header": [],
+                  "body": {
+                     "mode": "raw",
+                     "raw": "{\r\n    \"fullName\": \"Jamie Lannister\",\r\n    \"email\": \"jamie@gmail.com\"\r\n}",
+                     "options": {
+                        "raw": {
+                           "language": "json"
+                        }
+                     }
+                  },
+                  "url": {
+                     "raw": "{{domain}}/users/update-account",
+                     "host": ["{{domain}}"],
+                     "path": ["users", "update-account"]
+                  }
+               },
+               "response": []
+            },
+            {
+               "name": "Change avatar image",
+               "request": {
+                  "method": "PATCH",
+                  "header": [],
+                  "body": {
+                     "mode": "formdata",
+                     "formdata": [
+                        {
+                           "key": "avatar",
+                           "type": "file",
+                           "uuid": "c491675e-327d-4edb-9f6f-01060e183188",
+                           "src": "/C:/Users/rajes/Pictures/Screenshots/file2.png"
+                        }
+                     ]
+                  },
+                  "url": {
+                     "raw": "{{domain}}/users/avatar",
+                     "host": ["{{domain}}"],
+                     "path": ["users", "avatar"]
+                  }
+               },
+               "response": []
+            },
+            {
+               "name": "Change Cover image",
+               "request": {
+                  "method": "PATCH",
+                  "header": [],
+                  "body": {
+                     "mode": "formdata",
+                     "formdata": [
+                        {
+                           "key": "coverImage",
+                           "type": "file",
+                           "uuid": "c29e4126-2c06-43fa-86ec-a20d2ff6656d",
+                           "src": "/C:/Users/rajes/Pictures/Screenshots/f.png"
+                        }
+                     ]
+                  },
+                  "url": {
+                     "raw": "{{domain}}/users/cover-image",
+                     "host": ["{{domain}}"],
+                     "path": ["users", "cover-image"]
+                  }
+               },
+               "response": []
+            },
+            {
+               "name": "Get channel details",
+               "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+               },
+               "request": {
+                  "auth": {
+                     "type": "noauth"
+                  },
+                  "method": "GET",
+                  "header": [],
+                  "body": {
+                     "mode": "formdata",
+                     "formdata": []
+                  },
+                  "url": {
+                     "raw": "{{domain}}/users/@kitten",
+                     "host": ["{{domain}}"],
+                     "path": ["users", "@kitten"]
+                  }
+               },
+               "response": []
+            },
+            {
+               "name": "Get watch history",
+               "request": {
+                  "method": "GET",
+                  "header": [],
+                  "url": {
+                     "raw": "{{domain}}/users/history",
+                     "host": ["{{domain}}"],
+                     "path": ["users", "history"]
+                  }
+               },
+               "response": []
+            }
+         ]
+      },
+      {
+         "name": "Health Check",
+         "item": [
+            {
+               "name": "Health Check",
+               "request": {
+                  "method": "GET",
+                  "header": [],
+                  "url": {
+                     "raw": "{{domain}}/health-check",
+                     "host": ["{{domain}}"],
+                     "path": ["health-check"]
+                  }
+               },
+               "response": []
+            }
+         ]
+      },
+      {
+         "name": "Playlist",
+         "item": [
+            {
+               "name": "Create Playlist",
+               "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                     "mode": "raw",
+                     "raw": "{\r\n    \"name\": \"Jamie playlist 2\",\r\n    \"description\": \"Songs\"\r\n}",
+                     "options": {
+                        "raw": {
+                           "language": "json"
+                        }
+                     }
+                  },
+                  "url": {
+                     "raw": "{{domain}}/playlist",
+                     "host": ["{{domain}}"],
+                     "path": ["playlist"]
+                  }
+               },
+               "response": []
+            },
+            {
+               "name": "Get user playlists",
+               "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+               },
+               "request": {
+                  "method": "GET",
+                  "header": [],
+                  "body": {
+                     "mode": "raw",
+                     "raw": "",
+                     "options": {
+                        "raw": {
+                           "language": "json"
+                        }
+                     }
+                  },
+                  "url": {
+                     "raw": "{{domain}}/playlist/user/69771f6dd8633a35e7791950",
+                     "host": ["{{domain}}"],
+                     "path": ["playlist", "user", "69771f6dd8633a35e7791950"]
+                  }
+               },
+               "response": []
+            },
+            {
+               "name": "Get playlist by id",
+               "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+               },
+               "request": {
+                  "method": "GET",
+                  "header": [],
+                  "body": {
+                     "mode": "raw",
+                     "raw": ""
+                  },
+                  "url": {
+                     "raw": "{{domain}}/playlist/69771f9cd8633a35e7791958",
+                     "host": ["{{domain}}"],
+                     "path": ["playlist", "69771f9cd8633a35e7791958"]
+                  }
+               },
+               "response": []
+            },
+            {
+               "name": "Update playlist",
+               "request": {
+                  "method": "PATCH",
+                  "header": [],
+                  "body": {
+                     "mode": "raw",
+                     "raw": "{\r\n    \"name\": \"Updated playlist\",\r\n    \"description\": \"trendzz\"\r\n}",
+                     "options": {
+                        "raw": {
+                           "language": "json"
+                        }
+                     }
+                  },
+                  "url": {
+                     "raw": "{{domain}}/playlist/69771f9cd8633a35e7791958",
+                     "host": ["{{domain}}"],
+                     "path": ["playlist", "69771f9cd8633a35e7791958"]
+                  }
+               },
+               "response": []
+            },
+            {
+               "name": "Delete playlist",
+               "request": {
+                  "method": "DELETE",
+                  "header": [],
+                  "body": {
+                     "mode": "raw",
+                     "raw": "",
+                     "options": {
+                        "raw": {
+                           "language": "json"
+                        }
+                     }
+                  },
+                  "url": {
+                     "raw": "{{domain}}/playlist/69771f9cd8633a35e7791958",
+                     "host": ["{{domain}}"],
+                     "path": ["playlist", "69771f9cd8633a35e7791958"]
+                  }
+               },
+               "response": []
+            },
+            {
+               "name": "Add video to playlist",
+               "request": {
+                  "method": "PATCH",
+                  "header": [],
+                  "url": {
+                     "raw": "{{domain}}/playlist/69771fa0d8633a35e779195c/add/697cc8d6db89d649aabcd97e",
+                     "host": ["{{domain}}"],
+                     "path": [
+                        "playlist",
+                        "69771fa0d8633a35e779195c",
+                        "add",
+                        "697cc8d6db89d649aabcd97e"
+                     ]
+                  }
+               },
+               "response": []
+            },
+            {
+               "name": "Remove video from playlist",
+               "request": {
+                  "method": "PATCH",
+                  "header": [],
+                  "url": {
+                     "raw": "{{domain}}/playlist/69771fa0d8633a35e779195c/remove/697cc905db89d649aabcd981",
+                     "host": ["{{domain}}"],
+                     "path": [
+                        "playlist",
+                        "69771fa0d8633a35e779195c",
+                        "remove",
+                        "697cc905db89d649aabcd981"
+                     ]
+                  }
+               },
+               "response": []
+            }
+         ],
+         "description": "Playlist related requests. CRUD operations."
+      },
+      {
+         "name": "Tweet",
+         "item": [
+            {
+               "name": "Create tweet",
+               "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                     "mode": "raw",
+                     "raw": "{\r\n    \"content\": \"Tweet about india\"\r\n}",
+                     "options": {
+                        "raw": {
+                           "language": "json"
+                        }
+                     }
+                  },
+                  "url": {
+                     "raw": "{{domain}}/tweets",
+                     "host": ["{{domain}}"],
+                     "path": ["tweets"]
+                  }
+               },
+               "response": []
+            },
+            {
+               "name": "Get user tweets",
+               "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+               },
+               "request": {
+                  "method": "GET",
+                  "header": [],
+                  "body": {
+                     "mode": "raw",
+                     "raw": ""
+                  },
+                  "url": {
+                     "raw": "{{domain}}/tweets/user/697705e419c154671b988704",
+                     "host": ["{{domain}}"],
+                     "path": ["tweets", "user", "697705e419c154671b988704"]
+                  }
+               },
+               "response": []
+            },
+            {
+               "name": "Update tweet",
+               "request": {
+                  "method": "PATCH",
+                  "header": [],
+                  "body": {
+                     "mode": "raw",
+                     "raw": "{\r\n    \"content\": \"Tweet about XYZ\"\r\n}",
+                     "options": {
+                        "raw": {
+                           "language": "json"
+                        }
+                     }
+                  },
+                  "url": {
+                     "raw": "{{domain}}/tweets/697afe873c7f3c108fe71215",
+                     "host": ["{{domain}}"],
+                     "path": ["tweets", "697afe873c7f3c108fe71215"]
+                  }
+               },
+               "response": []
+            },
+            {
+               "name": "New Request",
+               "request": {
+                  "method": "DELETE",
+                  "header": [],
+                  "body": {
+                     "mode": "raw",
+                     "raw": ""
+                  },
+                  "url": {
+                     "raw": "{{domain}}/tweets/697afe7f3c7f3c108fe71212",
+                     "host": ["{{domain}}"],
+                     "path": ["tweets", "697afe7f3c7f3c108fe71212"]
+                  }
+               },
+               "response": []
+            }
+         ],
+         "description": "Tweet Crud operations"
+      },
+      {
+         "name": "Video",
+         "item": [
+            {
+               "name": "Publish a video",
+               "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                     "mode": "formdata",
+                     "formdata": [
+                        {
+                           "key": "videoFile",
+                           "type": "file",
+                           "uuid": "3e186164-a03f-416d-99b7-5d64e14acc5d",
+                           "src": "/C:/Users/rajes/Videos/Overwolf/Captures/WhatsApp 2025-02-27 20-07-25.mp4"
+                        },
+                        {
+                           "key": "thumbnail",
+                           "type": "file",
+                           "uuid": "6bb3f6ab-41a5-4206-8b36-9b712535dc7f",
+                           "src": "/C:/Users/rajes/Pictures/Screenshots/f3.png"
+                        },
+                        {
+                           "key": "title",
+                           "value": "react video from jon snow #2",
+                           "type": "text",
+                           "uuid": "c89066f9-6ceb-4850-b497-7bd81bd2096d"
+                        },
+                        {
+                           "key": "description",
+                           "value": "react tutorial by aegon targaryen",
+                           "type": "text",
+                           "uuid": "de258031-3134-4423-a051-0ddee4b499e3"
+                        }
+                     ]
+                  },
+                  "url": {
+                     "raw": "{{domain}}/videos",
+                     "host": ["{{domain}}"],
+                     "path": ["videos"]
+                  }
+               },
+               "response": []
+            },
+            {
+               "name": "Get video by Id",
+               "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+               },
+               "request": {
+                  "method": "GET",
+                  "header": [],
+                  "body": {
+                     "mode": "formdata",
+                     "formdata": [
+                        {
+                           "key": "videoFile",
+                           "type": "file",
+                           "uuid": "3e186164-a03f-416d-99b7-5d64e14acc5d",
+                           "src": "/C:/Users/rajes/Videos/Overwolf/Captures/v1.mp4"
+                        },
+                        {
+                           "key": "thumbnail",
+                           "type": "file",
+                           "uuid": "6bb3f6ab-41a5-4206-8b36-9b712535dc7f",
+                           "src": "/C:/Users/rajes/Pictures/Screenshots/f3.png"
+                        },
+                        {
+                           "key": "title",
+                           "value": "RDR2 video",
+                           "type": "text",
+                           "uuid": "c89066f9-6ceb-4850-b497-7bd81bd2096d"
+                        },
+                        {
+                           "key": "description",
+                           "value": "please like, share and subscribe",
+                           "type": "text",
+                           "uuid": "de258031-3134-4423-a051-0ddee4b499e3"
+                        }
+                     ]
+                  },
+                  "url": {
+                     "raw": "{{domain}}/videos/697c7a05cae376ffc7fffe61",
+                     "host": ["{{domain}}"],
+                     "path": ["videos", "697c7a05cae376ffc7fffe61"]
+                  }
+               },
+               "response": []
+            },
+            {
+               "name": "Delete video",
+               "request": {
+                  "method": "DELETE",
+                  "header": [],
+                  "body": {
+                     "mode": "formdata",
+                     "formdata": [
+                        {
+                           "key": "videoFile",
+                           "type": "file",
+                           "uuid": "3e186164-a03f-416d-99b7-5d64e14acc5d",
+                           "src": "/C:/Users/rajes/Videos/Overwolf/Captures/v1.mp4"
+                        },
+                        {
+                           "key": "thumbnail",
+                           "type": "file",
+                           "uuid": "6bb3f6ab-41a5-4206-8b36-9b712535dc7f",
+                           "src": "/C:/Users/rajes/Pictures/Screenshots/f3.png"
+                        },
+                        {
+                           "key": "title",
+                           "value": "RDR2 video",
+                           "type": "text",
+                           "uuid": "c89066f9-6ceb-4850-b497-7bd81bd2096d"
+                        },
+                        {
+                           "key": "description",
+                           "value": "please like, share and subscribe",
+                           "type": "text",
+                           "uuid": "de258031-3134-4423-a051-0ddee4b499e3"
+                        }
+                     ]
+                  },
+                  "url": {
+                     "raw": "{{domain}}/videos/697c7a05cae376ffc7fffe61",
+                     "host": ["{{domain}}"],
+                     "path": ["videos", "697c7a05cae376ffc7fffe61"]
+                  }
+               },
+               "response": []
+            },
+            {
+               "name": "Update video",
+               "request": {
+                  "method": "PATCH",
+                  "header": [],
+                  "body": {
+                     "mode": "formdata",
+                     "formdata": [
+                        {
+                           "key": "videoFile",
+                           "type": "file",
+                           "uuid": "3e186164-a03f-416d-99b7-5d64e14acc5d",
+                           "src": "/C:/Users/rajes/Videos/Overwolf/Captures/v1.mp4",
+                           "disabled": true
+                        },
+                        {
+                           "key": "thumbnail",
+                           "type": "file",
+                           "uuid": "6bb3f6ab-41a5-4206-8b36-9b712535dc7f",
+                           "src": "/C:/Users/rajes/Pictures/Screenshots/file2.png"
+                        },
+                        {
+                           "key": "title",
+                           "value": "New title",
+                           "type": "text",
+                           "uuid": "c89066f9-6ceb-4850-b497-7bd81bd2096d",
+                           "disabled": true
+                        },
+                        {
+                           "key": "description",
+                           "value": "new desc",
+                           "type": "text",
+                           "uuid": "de258031-3134-4423-a051-0ddee4b499e3"
+                        }
+                     ]
+                  },
+                  "url": {
+                     "raw": "{{domain}}/videos/697c776f4124f7b84bcb9ebd",
+                     "host": ["{{domain}}"],
+                     "path": ["videos", "697c776f4124f7b84bcb9ebd"]
+                  }
+               },
+               "response": []
+            },
+            {
+               "name": "Toggle publish",
+               "request": {
+                  "method": "PATCH",
+                  "header": [],
+                  "body": {
+                     "mode": "raw",
+                     "raw": ""
+                  },
+                  "url": {
+                     "raw": "{{domain}}/videos/697c776f4124f7b84bcb9ebd/toggle-publish",
+                     "host": ["{{domain}}"],
+                     "path": [
+                        "videos",
+                        "697c776f4124f7b84bcb9ebd",
+                        "toggle-publish"
+                     ]
+                  }
+               },
+               "response": []
+            },
+            {
+               "name": "Get all videos by query",
+               "request": {
+                  "method": "GET",
+                  "header": [],
+                  "url": {
+                     "raw": "{{domain}}/videos?query=react",
+                     "host": ["{{domain}}"],
+                     "path": ["videos"],
+                     "query": [
+                        {
+                           "key": "query",
+                           "value": "react"
+                        }
+                     ]
+                  }
+               },
+               "response": []
+            }
+         ]
+      },
+      {
+         "name": "Comments",
+         "item": [
+            {
+               "name": "Add comment",
+               "request": {
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                     "mode": "raw",
+                     "raw": "{\r\n    \"content\": \"best js tutorial\"\r\n}",
+                     "options": {
+                        "raw": {
+                           "language": "json"
+                        }
+                     }
+                  },
+                  "url": {
+                     "raw": "{{domain}}/comments/697cc8d6db89d649aabcd97e",
+                     "host": ["{{domain}}"],
+                     "path": ["comments", "697cc8d6db89d649aabcd97e"]
+                  }
+               },
+               "response": []
+            },
+            {
+               "name": "Get Video comments",
+               "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+               },
+               "request": {
+                  "method": "GET",
+                  "header": [],
+                  "body": {
+                     "mode": "raw",
+                     "raw": "{\r\n    \"content\": \"Best video on viewtube to learn react! thanks ser jamie lannister\"\r\n}",
+                     "options": {
+                        "raw": {
+                           "language": "json"
+                        }
+                     }
+                  },
+                  "url": {
+                     "raw": "{{domain}}/comments/697cc905db89d649aabcd981",
+                     "host": ["{{domain}}"],
+                     "path": ["comments", "697cc905db89d649aabcd981"]
+                  }
+               },
+               "response": []
+            },
+            {
+               "name": "Delete a comment",
+               "request": {
+                  "method": "DELETE",
+                  "header": [],
+                  "url": {
+                     "raw": "{{domain}}/comments/c/697db514a9fb04af1e53850c",
+                     "host": ["{{domain}}"],
+                     "path": ["comments", "c", "697db514a9fb04af1e53850c"]
+                  }
+               },
+               "response": []
+            },
+            {
+               "name": "Update comment",
+               "request": {
+                  "method": "PATCH",
+                  "header": [],
+                  "body": {
+                     "mode": "raw",
+                     "raw": "{ \r\n    \"content\": \"Edit: Thanks for 1k likes. Mom! i'm famous\"\r\n}",
+                     "options": {
+                        "raw": {
+                           "language": "json"
+                        }
+                     }
+                  },
+                  "url": {
+                     "raw": "{{domain}}/comments/c/697db514a9fb04af1e53850c",
+                     "host": ["{{domain}}"],
+                     "path": ["comments", "c", "697db514a9fb04af1e53850c"]
+                  }
+               },
+               "response": []
+            }
+         ],
+         "description": "CRUD operations on comments on video"
+      },
+      {
+         "name": "Subscription",
+         "item": [
+            {
+               "name": "Toggle Subscribe",
+               "request": {
+                  "method": "POST",
+                  "header": [],
+                  "url": {
+                     "raw": "{{domain}}/subscriptions/channel/697705e419c154671b988704",
+                     "host": ["{{domain}}"],
+                     "path": [
+                        "subscriptions",
+                        "channel",
+                        "697705e419c154671b988704"
+                     ]
+                  }
+               },
+               "response": []
+            },
+            {
+               "name": "Get channel subscribers",
+               "request": {
+                  "method": "GET",
+                  "header": [],
+                  "url": {
+                     "raw": "{{domain}}/subscriptions/channel/697775a5e4897e0218709ab5",
+                     "host": ["{{domain}}"],
+                     "path": [
+                        "subscriptions",
+                        "channel",
+                        "697775a5e4897e0218709ab5"
+                     ]
+                  }
+               },
+               "response": []
+            },
+            {
+               "name": "Get subscribed channels",
+               "request": {
+                  "method": "GET",
+                  "header": [],
+                  "url": {
+                     "raw": "{{domain}}/subscriptions/user/697705e419c154671b988704",
+                     "host": ["{{domain}}"],
+                     "path": [
+                        "subscriptions",
+                        "user",
+                        "697705e419c154671b988704"
+                     ]
+                  }
+               },
+               "response": []
+            }
+         ],
+         "description": "Subscription related requests: Subscribe/Unsubscribe, get channel subscribers, get subscribd channels"
+      },
+      {
+         "name": "Likes",
+         "item": [
+            {
+               "name": "Like a Video",
+               "request": {
+                  "method": "POST",
+                  "header": [],
+                  "url": {
+                     "raw": "{{domain}}/likes/video/697cc850db89d649aabcd971",
+                     "host": ["{{domain}}"],
+                     "path": ["likes", "video", "697cc850db89d649aabcd971"]
+                  }
+               },
+               "response": []
+            },
+            {
+               "name": "Like a Comment",
+               "request": {
+                  "method": "POST",
+                  "header": [],
+                  "url": {
+                     "raw": "{{domain}}/likes/comment/697db91ff27d932c7f9ad8f4",
+                     "host": ["{{domain}}"],
+                     "path": ["likes", "comment", "697db91ff27d932c7f9ad8f4"]
+                  }
+               },
+               "response": []
+            },
+            {
+               "name": "Like a Tweet",
+               "request": {
+                  "method": "POST",
+                  "header": [],
+                  "url": {
+                     "raw": "{{domain}}/likes/tweet/697e49f92736e472f547fed3",
+                     "host": ["{{domain}}"],
+                     "path": ["likes", "tweet", "697e49f92736e472f547fed3"]
+                  }
+               },
+               "response": []
+            },
+            {
+               "name": "Get all liked videos",
+               "request": {
+                  "method": "GET",
+                  "header": [],
+                  "url": {
+                     "raw": "{{domain}}/likes/videos",
+                     "host": ["{{domain}}"],
+                     "path": ["likes", "videos"]
+                  }
+               },
+               "response": []
+            }
+         ],
+         "description": "Like related requests : Get all liked videos, toggle like in Videos, Comments or Tweets"
+      }
+   ]
+}

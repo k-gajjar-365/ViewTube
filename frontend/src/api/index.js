@@ -1,0 +1,10 @@
+export * as authApi from "./auth.api";
+export * as videoApi from "./video.api";
+export * as userApi from "./user.api";
+export * as likeApi from "./like.api";
+export * as commentApi from "./comment.api";
+export * as playlistApi from "./playlist.api";
+export * as historyApi from "./history.api";
+export * as tweetApi from "./tweet.api";
+export * as dashboardApi from "./dashboard.api";
+export * as healthApi from "./health.api";
