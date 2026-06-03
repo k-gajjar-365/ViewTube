@@ -1,0 +1,33 @@
+import React from "react";
+
+const NoVideo = (props) => {
+   return (
+      <div className="flex text-center flex-col items-center justify-center h-screen">
+         <svg
+            className="w-10 h-10 text-gray-800 dark:text-white"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+         >
+            <path
+               stroke="currentColor"
+               strokeLinecap="round"
+               strokeLinejoin="round"
+               strokeWidth="1"
+               d="M19 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1Zm0 0-4 4m5 0H4m1 0 4-4m1 4 4-4m-4 7v6l4-3-4-3Z"
+            />
+         </svg>
+
+         <b>No videos available for "{props.search}"</b>
+         <p>
+            There are no videos here available. Please try to search something
+            else.
+         </p>
+      </div>
+   );
+};
+
+export default NoVideo;

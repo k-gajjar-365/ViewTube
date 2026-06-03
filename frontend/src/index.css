@@ -1,0 +1,29 @@
+@import "tailwindcss";
+@tailwind utilities;
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(161, 161, 170); 
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(113, 113, 122); 
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(161, 161, 170) transparent;
+}
+
+:root {
+  --primary: #9164d9;
+  --primary-on-hover: #9a78d1;
+}
